@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1045224735211",
+    "project_id": "youdoyou-aeae2",
+    "storage_bucket": "youdoyou-aeae2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045224735211:android:3d90ecc24fdefd165119ae",
+        "android_client_info": {
+          "package_name": "com.example.youdoyou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-qelyyeku8sfN6ORkxodZC9fS7-pAkVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045224735211:android:c457cff921e7087a5119ae",
+        "android_client_info": {
+          "package_name": "com.example.youdoyouapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-qelyyeku8sfN6ORkxodZC9fS7-pAkVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
