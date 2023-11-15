@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/routing/routes.dart';
-
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //TODO(Any): Replace all Placeholder() with correct widget/page.
 
-final GoRouter route = GoRouter(
-  navigatorKey: _rootNavigatorKey,
-  initialLocation: AppRoutes.root.name,
-  routes: [
-    GoRoute(
-      path: '/',
-      name: AppRoutes.root.name,
-      builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+final goRouterProvider = Provider<GoRouter>(
+  (ref) {
+    return GoRouter(
+      initialLocation: '/',
       routes: [
         GoRoute(
-          path: 'home',
-          name: AppRoutes.home.name,
+          path: '/',
+          name: AppRoutes.root.name,
           builder: (BuildContext context, GoRouterState state) => const Placeholder(),
           routes: [
             GoRoute(
-              path: 'create',
-              name: AppRoutes.create.name,
+              path: 'home',
+              name: AppRoutes.home.name,
               builder: (BuildContext context, GoRouterState state) => const Placeholder(),
-            ),
-            GoRoute(
-              path: 'detail',
-              name: AppRoutes.detail.name,
-              builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+              routes: [
+                GoRoute(
+                  path: 'create',
+                  name: AppRoutes.create.name,
+                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+                ),
+                GoRoute(
+                  path: 'detail',
+                  name: AppRoutes.detail.name,
+                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+                ),
+              ],
             ),
           ],
         ),
       ],
-    ),
-  ],
+      //TODO(Any): Replace this with some error 404 widget.
+      errorBuilder: (BuildContext context, GoRouterState state) => const Text("Error"),
+    );
+  },
 );
