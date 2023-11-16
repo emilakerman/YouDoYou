@@ -20,24 +20,18 @@ Widget _buildFAB({
   required IconData icon,
   required BuildContext context,
 }) {
-  final iconHandlers = {
-    Icons.line_style_outlined: () {
-      //TODO(Any): Implement navigation.
+  return FloatingActionButton(
+    heroTag: null,
+    onPressed: () {
+      if (icon == Icons.line_style_outlined) {
+        //TODO(Any): Implement navigation.
+      } else if (icon == Icons.list_alt_outlined) {
+        //TODO(Any): Implement navigation.
+      } else if (icon == Icons.list_sharp) {
+        //TODO(Any): Implement navigation.
+      }
     },
-    Icons.list_alt_outlined: () {
-      //TODO(Any): Implement navigation.
-    },
-    Icons.list_sharp: () {
-      //TODO(Any): Implement navigation.
-    },
-  };
-
-  return Consumer(
-    builder: (_, ref, __) => FloatingActionButton(
-      heroTag: null,
-      onPressed: iconHandlers[icon],
-      backgroundColor: AppColors.primary,
-      child: Icon(icon),
-    ),
+    backgroundColor: AppColors.primary,
+    child: Icon(icon),
   );
 }
