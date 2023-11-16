@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 
 Widget buildFABRow({
   required BuildContext context,
-  Function? onPressed,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
