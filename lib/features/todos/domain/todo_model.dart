@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TodoModel {
   final String title;
   final String description;
-  // Maybe DateTime instaed of string?
+  // Maybe DateTime instead of string?
   final String creationDate;
   final String endDate;
   // String or "image" data type?

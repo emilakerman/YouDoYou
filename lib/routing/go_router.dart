@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:youdoyou/error_widget.dart';
+import 'package:youdoyou/common_widgets/error_widget.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
