@@ -8,6 +8,7 @@ class ReceivedToDoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.extra,
+      margin: EdgeInsets.all(10),
       child: Column(
         children: [
           Container(
@@ -21,6 +22,7 @@ class ReceivedToDoList extends StatelessWidget {
               itemCount: 8,
               itemBuilder: (context, index) {
                 return Card(
+                  margin: EdgeInsets.all(5),
                   elevation: 5,
                   child: Row(
                     children: [
