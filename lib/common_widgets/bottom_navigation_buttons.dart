@@ -44,7 +44,7 @@ Widget _buildFAB({
         //TODO(Any): Implement navigation.
       }
     },
-    backgroundColor: AppColors.seconday,
+    backgroundColor: AppColors.secondary,
     child: Icon(icon),
   );
 }

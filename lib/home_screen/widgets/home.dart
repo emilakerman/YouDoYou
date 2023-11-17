@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
       //title: 'YouDoYou',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.seconday),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondary),
         useMaterial3: true,
       ),
       home: Scaffold(
