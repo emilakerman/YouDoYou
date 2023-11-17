@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+/// The class defines static constant colors for different reusable colors.
 class AppColors {
   static const primary = Color(0xf0BBBDF6);
   static const seconday = Color(0xf09893DA);

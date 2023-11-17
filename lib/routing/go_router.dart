@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/createTodoItem.dart';
+import 'package:youdoyou/common_widgets/error_widget.dart';
+import 'package:youdoyou/home_screen/widgets/home.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,8 +16,7 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) =>
-              const Placeholder(),
+          builder: (BuildContext context, GoRouterState state) => const Home(),
           routes: [
             GoRoute(
               path: 'home',
@@ -34,9 +35,10 @@ final goRouterProvider = Provider<GoRouter>(
           ],
         ),
       ],
-      //TODO(Any): Replace this with some error 404 widget.
-      errorBuilder: (BuildContext context, GoRouterState state) =>
-          const Text("Error"),
+      /// The `errorBuilder` is a callback function that is used to build a widget when the GoRouter
+      /// encounters an error or when a route is not found. In this case, it returns a `Text` widget with the
+      /// text "Error". This widget will be displayed when there is an error or when a route is not found.
+      errorBuilder: (BuildContext context, GoRouterState state) => const CustomErrorWidget(),
     );
   },
 );
