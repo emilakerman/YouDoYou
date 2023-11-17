@@ -7,7 +7,7 @@ part of 'create_todo_controller.dart';
 // **************************************************************************
 
 String _$createToDoItemControllerHash() =>
-    r'7c71a4563b318acecb982a13ebfd66eeb9501754';
+    r'c40e3e0dcbc0989295fb09f18914080faad535c5';
 
 /// See also [CreateToDoItemController].
 @ProviderFor(CreateToDoItemController)

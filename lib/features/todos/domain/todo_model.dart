@@ -1,13 +1,13 @@
 class TodoModel {
-  final String title;
-  final String description;
+  String title;
+  String description;
   // Maybe DateTime instead of string?
-  final String creationDate;
-  final String endDate;
+  String creationDate;
+  String endDate;
   // String or "image" data type?
-  final String? image;
+  String? image;
   // This is the user, so maybe not a string but some ID?
-  final String author;
+  String author;
 
   TodoModel({
     required this.title,
@@ -29,14 +29,3 @@ class TodoModel {
     };
   }
 }
-// Keep commented save for later.
-// final toDoProvider = StateProvider<TodoModel>(
-//   (ref) {
-//     return TodoModel(
-//       title: "TITEL",
-//       description: "DESCRIPTION",
-//       creationDate: "2023-11-16",
-//       endDate: "2023-11-31",
-//     );
-//   },
-// );

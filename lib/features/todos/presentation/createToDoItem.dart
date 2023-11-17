@@ -89,33 +89,30 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     }
   }
 
-//TODO(ANY): put this function in utils.
+//TODO(Any): Put this function in utils.
   String getTodaysDate() {
     DateTime today = DateTime.now();
     return "${today.year}-${today.month}-${today.day}";
   }
 
-  Future<void> _createTodoItem({required ref}) async {
+  void _setTodoObject({required WidgetRef ref}) {
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeTitle(_titleController.text.characters.toString());
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeDescription(_descriptionController.text.characters.toString());
+    ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeCreationDate(getTodaysDate().toString());
+  }
+
+  //TODO(Any): This function looks a bit messy and should probably be shortened or similar.
+  Future<void> _createTodoItem({required WidgetRef ref}) async {
     FirebaseDataService dataService = FirebaseDataService();
-    dataService.addTodo();
-    if (kDebugMode) {
-      // print(_titleController.text.characters);
-      //keep this commented below
-      // ref
-      //     .read(createToDoItemControllerProvider.notifier)
-      //     .changeTitle(_titleController.text.characters.toString());
-      // print(ref.watch(createToDoItemControllerProvider.select((value) => value.title)));
-    }
-    if (kDebugMode) {
-      // print(_descriptionController.text.characters);
-    }
-    if (kDebugMode) {
-      // print(_selectedDate);
-    }
-    if (kDebugMode) {
-      // print(getTodaysDate());
-    }
-    //TODO(Any): create function to create item and save to firebase
+    _setTodoObject(ref: ref);
+    dataService.addTodo(ref);
   }
 
   @override
