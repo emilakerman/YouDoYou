@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
@@ -174,6 +175,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
           builder: (_, ref, __) => ElevatedButton(
             onPressed: () {
               _createTodoItem(ref: ref);
+              context.pop();
             },
             child: const Text('Save'),
           ),

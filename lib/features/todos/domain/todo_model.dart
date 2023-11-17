@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TodoModel {
   String title;
   String description;
@@ -28,4 +30,12 @@ class TodoModel {
       'author': author
     };
   }
+
+  TodoModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
+      : title = doc.data()!['title'],
+        description = doc.data()!['description'],
+        creationDate = doc.data()!['creationDate'],
+        endDate = doc.data()!['endDate'],
+        image = doc.data()!['image'],
+        author = doc.data()!['author'];
 }
