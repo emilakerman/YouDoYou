@@ -28,7 +28,6 @@ class TodoListState extends ConsumerState<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    final database = ref.read(databaseProvider);
     ref.watch(listViewProvider);
     return Card(
       color: AppColors.complement,

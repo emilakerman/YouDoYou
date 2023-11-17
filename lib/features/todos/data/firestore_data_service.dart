@@ -4,14 +4,8 @@ import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'dart:async';
 
-final databaseProvider = Provider((ref) {
-  return FirebaseDataService();
-});
-
 class FirebaseDataService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  Stream get allTodos => _db.collection('Todos').snapshots();
 
   Future<void> addTodo(WidgetRef ref) async {
     TodoModel userInputTodoModel = TodoModel(
