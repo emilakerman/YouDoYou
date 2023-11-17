@@ -23,10 +23,10 @@ class Home extends StatelessWidget {
           title: Text(title),
           backgroundColor: AppColors.complement,
         ),
-        body: const Column(
+        body: Column(
           children: [
             HomeHeader(),
-            ToDoList(),
+            TodoList(),
             ReceivedToDoList(),
             Text('Bottom navigator'),
           ],

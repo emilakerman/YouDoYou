@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 
@@ -37,3 +38,5 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.author = newAuthor;
   }
 }
+
+final listViewProvider = StateProvider<List<TodoModel>>((ref) => []);
