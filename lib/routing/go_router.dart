@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/home_screen/widgets/home.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +14,7 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+          builder: (BuildContext context, GoRouterState state) => const Home(),
           routes: [
             GoRoute(
               path: 'home',
