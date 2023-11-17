@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youdoyou/common_widgets/bottom_navigation_buttons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/home_screen/widgets/home_header.dart';
 import 'package:youdoyou/home_screen/widgets/received_todo_list.dart';
@@ -30,6 +31,8 @@ class Home extends StatelessWidget {
             Text('Bottom navigator'),
           ],
         ),
+        floatingActionButton: buildFABRow(context: context),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }

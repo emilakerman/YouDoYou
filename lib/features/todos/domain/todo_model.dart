@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class TodoModel {
   final String title;
   final String description;
@@ -19,6 +17,17 @@ class TodoModel {
     this.image,
     required this.author,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'creationDate': creationDate,
+      'endDate': endDate,
+      'image': image,
+      'author': author
+    };
+  }
 }
 // Keep commented save for later.
 // final toDoProvider = StateProvider<TodoModel>(
