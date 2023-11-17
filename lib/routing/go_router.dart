@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/createTodoItem.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,17 +14,20 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+          builder: (BuildContext context, GoRouterState state) =>
+              const Placeholder(),
           routes: [
             GoRoute(
               path: 'home',
               name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+              builder: (BuildContext context, GoRouterState state) =>
+                  const Placeholder(),
               routes: [
                 GoRoute(
                   path: 'detail',
                   name: AppRoutes.detail.name,
-                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const Placeholder(),
                 ),
               ],
             ),
@@ -31,7 +35,8 @@ final goRouterProvider = Provider<GoRouter>(
         ),
       ],
       //TODO(Any): Replace this with some error 404 widget.
-      errorBuilder: (BuildContext context, GoRouterState state) => const Text("Error"),
+      errorBuilder: (BuildContext context, GoRouterState state) =>
+          const Text("Error"),
     );
   },
 );
