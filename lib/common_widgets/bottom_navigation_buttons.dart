@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_colors.dart';
+import 'package:youdoyou/features/todos/presentation/createToDoItem.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/routing/routes.dart';
 
 /// The `buildFABRow` function returns a row of floating action buttons with different icons, and the
@@ -25,15 +27,24 @@ Widget _buildFAB({
   return FloatingActionButton(
     heroTag: null,
     onPressed: () {
+      void showCreateItemDialog(BuildContext context) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CreateItemWidget();
+          },
+        );
+      }
+
       if (icon == Icons.home) {
         context.goNamed(AppRoutes.root.name);
       } else if (icon == Icons.add) {
-        //TODO(Any): Implement show alert Method to add TODO item.
+        showCreateItemDialog(context);
       } else if (icon == Icons.line_style_outlined) {
         //TODO(Any): Implement navigation.
       }
     },
-    backgroundColor: AppColors.primary,
+    backgroundColor: AppColors.secondary,
     child: Icon(icon),
   );
 }

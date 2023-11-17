@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
 class CreateItemWidget extends StatefulWidget {
   const CreateItemWidget({super.key});
@@ -35,7 +38,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
 
   void _selectImage() async {
     try {
-      Uint8List img = await pickImage(ImageSource.gallery);
+      Uint8List? img = await pickImage(ImageSource.gallery);
       if (img != null) {
         setState(() {
           _image = img;
@@ -54,7 +57,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
 
   void _selectCamera() async {
     try {
-      Uint8List img = await pickImage(ImageSource.camera);
+      Uint8List? img = await pickImage(ImageSource.camera);
       if (img != null) {
         setState(() {
           _image = img;
@@ -92,20 +95,27 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     return "${today.year}-${today.month}-${today.day}";
   }
 
-  Future<void> _createTodoItem() async {
+  Future<void> _createTodoItem({required ref}) async {
+    FirebaseDataService dataService = FirebaseDataService();
+    dataService.addTodo();
     if (kDebugMode) {
-      print(_titleController.text.characters);
+      // print(_titleController.text.characters);
+      //keep this commented below
+      // ref
+      //     .read(createToDoItemControllerProvider.notifier)
+      //     .changeTitle(_titleController.text.characters.toString());
+      // print(ref.watch(createToDoItemControllerProvider.select((value) => value.title)));
     }
     if (kDebugMode) {
-      print(_descriptionController.text.characters);
+      // print(_descriptionController.text.characters);
     }
     if (kDebugMode) {
-      print(_selectedDate);
+      // print(_selectedDate);
     }
     if (kDebugMode) {
-      print(getTodaysDate());
+      // print(getTodaysDate());
     }
-    //TODO(ANT): create function to create item and save to firebase
+    //TODO(Any): create function to create item and save to firebase
   }
 
   @override
@@ -123,13 +133,11 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
             child: Column(
           children: [
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.cabin), labelText: 'Title'),
+              decoration: const InputDecoration(icon: Icon(Icons.cabin), labelText: 'Title'),
               controller: _titleController,
             ),
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.note), labelText: 'Description'),
+              decoration: const InputDecoration(icon: Icon(Icons.note), labelText: 'Description'),
               controller: _descriptionController,
             ),
             TextFormField(
@@ -147,11 +155,8 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
             ),
             Row(
               children: [
-                IconButton(
-                    onPressed: _selectCamera,
-                    icon: const Icon(Icons.add_a_photo)),
-                IconButton(
-                    onPressed: _selectImage, icon: const Icon(Icons.image))
+                IconButton(onPressed: _selectCamera, icon: const Icon(Icons.add_a_photo)),
+                IconButton(onPressed: _selectImage, icon: const Icon(Icons.image))
               ],
             ),
             _image != null
@@ -168,11 +173,13 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
           style: ElevatedButton.styleFrom(),
           child: const Text('Cancel'),
         ),
-        ElevatedButton(
-          onPressed: () {
-            _createTodoItem();
-          },
-          child: const Text('Save'),
+        Consumer(
+          builder: (_, ref, __) => ElevatedButton(
+            onPressed: () {
+              _createTodoItem(ref: ref);
+            },
+            child: const Text('Save'),
+          ),
         ),
       ],
     );
