@@ -28,7 +28,6 @@ class Home extends StatelessWidget {
             HomeHeader(),
             TodoList(),
             ReceivedToDoList(),
-            Text('Bottom navigator'),
           ],
         ),
         floatingActionButton: buildFABRow(context: context),
