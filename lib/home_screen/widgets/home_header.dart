@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/home_screen/models/user.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -13,29 +14,14 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  bool isPicture = true;
-  File? _imageFile;
+  var user = User();
+
   final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
+    user.getProfilePicture;
     super.initState();
-    _loadImageFromPreferences();
-  }
-
-  _loadImageFromPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String imagePath = prefs.getString('imagePath') ?? '';
-    if (imagePath.isNotEmpty) {
-      setState(() {
-        _imageFile = File(imagePath);
-      });
-    }
-  }
-
-  _saveImageToPreferences(String imagePath) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('imagePath', imagePath);
   }
 
   _getImage() async {
@@ -43,9 +29,10 @@ class _HomeHeaderState extends State<HomeHeader> {
         await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
-        _imageFile = File(image.path);
+        user.setProfilePicture = image.path;
       });
-      _saveImageToPreferences(image.path);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('imagePath', image.path);
     }
   }
 
@@ -60,11 +47,8 @@ class _HomeHeaderState extends State<HomeHeader> {
         width: double.infinity,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            //PROFILE PICTURE
             Container(
-              //without this size, it would be as big as children
               height: 90,
               width: 150,
               margin: const EdgeInsets.only(left: 10, right: 10),
@@ -75,9 +59,9 @@ class _HomeHeaderState extends State<HomeHeader> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  _imageFile != null
+                  user.profilePicture != null
                       ? Image.file(
-                          _imageFile!,
+                          File(user.profilePicture!),
                           height: 80,
                           width: 80,
                           fit: BoxFit.cover,
@@ -88,7 +72,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                           size: 80,
                         ),
                   IconButton(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.only(top: 50),
                     onPressed: _getImage,
                     icon: const Icon(
                       AppIcons.editIcon,
@@ -98,7 +82,6 @@ class _HomeHeaderState extends State<HomeHeader> {
                 ],
               ),
             ),
-            //USER CARD
             Container(
               height: 90,
               width: 200,
@@ -106,7 +89,6 @@ class _HomeHeaderState extends State<HomeHeader> {
                   color: AppColors.additional,
                   border: Border.all(color: Colors.black),
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
-              //margin: const EdgeInsets.only(top: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -114,23 +96,19 @@ class _HomeHeaderState extends State<HomeHeader> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        //height: 30,
-                        //width: 100,
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: const Text(
                           'UserName',
                         ),
                       ),
                       Container(
-                        //height: 30,
-                        //width: 100,
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text('My ToDos'),
+                        padding: const EdgeInsets.only(left: 10),
+                        child: const Text('My ToDos'),
                       ),
                     ],
                   ),
                   IconButton(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.only(top: 50),
                     onPressed: () {},
                     icon: const Icon(
                       AppIcons.editIcon,

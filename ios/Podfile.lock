@@ -634,7 +634,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - cloud_firestore (4.13.0):
+  - cloud_firestore (4.13.1):
     - Firebase/Firestore (= 10.17.0)
     - firebase_core
     - Flutter
@@ -647,7 +647,7 @@ PODS:
   - Firebase/Firestore (10.17.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.17.0)
-  - firebase_auth (4.13.0):
+  - firebase_auth (4.14.0):
     - Firebase/Auth (= 10.17.0)
     - firebase_core
     - Flutter
@@ -781,6 +781,9 @@ PODS:
     - FlutterMacOS
   - PromisesObjC (2.3.1)
   - RecaptchaInterop (100.0.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -789,6 +792,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -825,13 +829,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  cloud_firestore: d76c02bf5967dc9131ab42fcc1088d0873581e28
+  cloud_firestore: c0e21891b99d3ac3d91abfe476ac88830a7c9939
   Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
-  firebase_auth: 8b51489f374ea36b8f0aac047738de1d1f02e573
+  firebase_auth: 6a41305f668ac6f9bcbefdedfcba5aacb8367e92
   firebase_core: efc9455611b8769fa90fbdae5da182600bd6901c
   FirebaseAppCheckInterop: 534d033d8d0436b4ab066a8205013d271e18a2b9
   FirebaseAuth: 8d285d9f6e39cc8e23be53a4edd83a923ea629d8
@@ -852,6 +858,7 @@ SPEC CHECKSUMS:
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

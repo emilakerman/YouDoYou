@@ -11,11 +11,25 @@ class ReceivedToDoList extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const SizedBox(
+          Container(
             height: 30,
-            width: double.infinity,
-            child: Text('Received ToDo List:', textAlign: TextAlign.center,),
+            width: 290,
+            margin: EdgeInsets.only(top: 5),
+            decoration: BoxDecoration(
+              color: AppColors.extra,
+              border: Border.all(
+                  color: AppColors.primary, width: 2, style: BorderStyle.solid),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
+            child: const Text(
+              'Received ToDo List:',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 23,
+              ),
+            ),
+          ),
           SizedBox(
             height: 230,
             child: ListView.builder(
@@ -28,9 +42,10 @@ class ReceivedToDoList extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: 70,
-                        child: Icon(Icons.add_a_photo_outlined,
-                        size: 50,
-                        color: Colors.black,
+                        child: Icon(
+                          Icons.add_a_photo_outlined,
+                          size: 50,
+                          color: Colors.black,
                         ),
                       ),
                     ],

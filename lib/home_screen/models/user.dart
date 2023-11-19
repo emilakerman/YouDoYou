@@ -1,10 +1,12 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class User {
   String? name;
   String? profilePicture;
 
-  User({this.name, this.profilePicture});
+  User();
 
-  String? getName() {
+  String? get getName {
     if (name == null) {
       return '';
     } else {
@@ -12,15 +14,19 @@ class User {
     }
   }
 
-  void setname(String name) {
+  set setName(String name) {
     this.name = name;
   }
 
-  String? getProfilePicture() {
-    return profilePicture;
+  void get getProfilePicture async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String imagePath = prefs.getString('imagePath') ?? '';
+    if (imagePath.isNotEmpty) {
+        profilePicture = imagePath;
+    }
   }
 
-  void setProfilePicture(String profilePicture) {
+  set setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
   }
 }
