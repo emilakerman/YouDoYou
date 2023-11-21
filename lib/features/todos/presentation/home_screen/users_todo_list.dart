@@ -87,6 +87,7 @@ class TodoListState extends ConsumerState<TodoList> {
                       margin: const EdgeInsets.all(Sizes.p4),
                       elevation: 5,
                       child: ToDoEntry(
+                        id: document.id,
                         entry: TodoModel.fromDocumentSnapshot(document),
                       ),
                     );

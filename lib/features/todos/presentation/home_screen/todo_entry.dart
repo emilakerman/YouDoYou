@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
-  const ToDoEntry({required this.entry, super.key});
+  final String id;
+  const ToDoEntry({required this.entry, super.key, required this.id});
 
   @override
   State<ToDoEntry> createState() => _ToDoItemState();
@@ -22,7 +25,7 @@ class _ToDoItemState extends State<ToDoEntry> {
       // });
     }
 
-    void handleDelete() {}
+    FirebaseDataService dataService = FirebaseDataService();
 
     return SizedBox(
       height: 60,
@@ -72,9 +75,8 @@ class _ToDoItemState extends State<ToDoEntry> {
                           ),
                   ),
                 ),
-                //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => dataService.deleteFromFirestore(widget.id),
                   icon: const Icon(
                     AppIcons.deleteIcon,
                     color: Colors.red,

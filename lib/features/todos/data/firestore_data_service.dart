@@ -30,4 +30,13 @@ class FirebaseDataService {
     QuerySnapshot<Map<String, dynamic>> snapshot = await _db.collection('Todos').get();
     return snapshot.docs.map((docSnapshot) => TodoModel.fromDocumentSnapshot(docSnapshot)).toList();
   }
+
+  /// The function deletes a document with a specific ID from a Firestore collection.
+  ///
+  /// Args:
+  ///   id (String): The id parameter is a string that represents the unique identifier of the document to
+  /// be deleted from the Firestore collection.
+  Future<void> deleteFromFirestore(String id) async {
+    _db.collection('Todos').doc(id).delete();
+  }
 }
