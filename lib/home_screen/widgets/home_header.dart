@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/home_screen/models/user.dart';
+import 'package:youdoyou/home_screen/widgets/user_card_form.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -34,6 +35,15 @@ class _HomeHeaderState extends State<HomeHeader> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('imagePath', image.path);
     }
+  }
+
+  void _startEditUserCard(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return UserCardForm();
+      },
+    );
   }
 
   @override
@@ -109,7 +119,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                   ),
                   IconButton(
                     padding: const EdgeInsets.only(top: 50),
-                    onPressed: () {},
+                    onPressed: () {
+                      _startEditUserCard(context);
+                    },
                     icon: const Icon(
                       AppIcons.editIcon,
                       color: Colors.black,

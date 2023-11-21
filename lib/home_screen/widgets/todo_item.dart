@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_icons.dart';
-import 'package:youdoyou/home_screen/models/todo.dart';
+import 'package:youdoyou/home_screen/models/todo_item.dart';
 
-class ToDoItem extends StatelessWidget {
-  final ToDoType item;
-  const ToDoItem({required this.item, super.key});
+class ToDoEntry extends StatefulWidget {
+  final ToDoItem entry;
+  const ToDoEntry({required this.entry, super.key});
 
   @override
+  State<ToDoEntry> createState() => _ToDoItemState();
+}
+
+class _ToDoItemState extends State<ToDoEntry> {
+  @override
   Widget build(BuildContext context) {
-    void handleCheck() {}
+    void handleCheck() {
+      setState(() {
+        widget.entry.isDone = !widget.entry.isDone;
+      });
+    }
     void handleDelete() {}
 
     return Container(
@@ -27,10 +36,13 @@ class ToDoItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                item.description,
+                widget.entry.description,
                 style: TextStyle(overflow: TextOverflow.ellipsis),
               ),
-              Text(DateFormat.yMMMd().format(item.creationDate)),
+              Text(
+                DateFormat.yMMMd().format(widget.entry.creationDate!),
+                style: TextStyle(fontSize: 15),
+                ),
             ],
           ),
           Container(
@@ -40,8 +52,8 @@ class ToDoItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
-                  icon: item.isDone == false
+                  onPressed: handleCheck,
+                  icon: widget.entry.isDone == false
                       ? Icon(
                           AppIcons.notCheckIcon,
                           color: Colors.grey,
