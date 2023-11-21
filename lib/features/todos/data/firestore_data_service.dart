@@ -9,24 +9,25 @@ class FirebaseDataService {
 
   Future<void> addTodo(WidgetRef ref) async {
     TodoModel userInputTodoModel = TodoModel(
-      title: await ref.watch(createToDoItemControllerProvider.notifier
-          .select((value) => value.newTodoModel.title)),
+      id: await ref.watch(
+          createToDoItemControllerProvider.notifier.select((value) => value.newTodoModel.id)),
+      title: await ref.watch(
+          createToDoItemControllerProvider.notifier.select((value) => value.newTodoModel.title)),
       description: await ref.watch(createToDoItemControllerProvider.notifier
           .select((value) => value.newTodoModel.description)),
       creationDate: await ref.watch(createToDoItemControllerProvider.notifier
           .select((value) => value.newTodoModel.creationDate)),
-      endDate: await ref.watch(createToDoItemControllerProvider.notifier
-          .select((value) => value.newTodoModel.endDate)),
+      endDate: await ref.watch(
+          createToDoItemControllerProvider.notifier.select((value) => value.newTodoModel.endDate)),
       author: 'Emil',
+      isDone: await ref.watch(
+          createToDoItemControllerProvider.notifier.select((value) => value.newTodoModel.isDone)),
     );
     await _db.collection("Todos").add(userInputTodoModel.toMap());
   }
 
   Future<List<TodoModel>> loadTodos() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection('Todos').get();
-    return snapshot.docs
-        .map((docSnapshot) => TodoModel.fromDocumentSnapshot(docSnapshot))
-        .toList();
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _db.collection('Todos').get();
+    return snapshot.docs.map((docSnapshot) => TodoModel.fromDocumentSnapshot(docSnapshot)).toList();
   }
 }

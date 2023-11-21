@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 
@@ -7,11 +8,13 @@ part 'create_todo_controller.g.dart';
 @riverpod
 class CreateToDoItemController extends _$CreateToDoItemController {
   TodoModel newTodoModel = TodoModel(
+    id: DateTime.now().toString(),
     title: '',
     description: '',
-    creationDate: '',
+    creationDate: DateFormat.yMMMd().format(DateTime.now()).toString(),
     endDate: '',
     author: '',
+    isDone: false,
   );
   @override
   TodoModel build() {
@@ -26,16 +29,16 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.description = newDescription;
   }
 
-  void changeCreationDate(String newCreationDate) {
-    state.creationDate = newCreationDate;
-  }
-
   void changeEndDate(String newEndDate) {
     state.endDate = newEndDate;
   }
 
   void changeAuthor(String newAuthor) {
     state.author = newAuthor;
+  }
+
+  void toggleIsDone() {
+    state.isDone = !state.isDone;
   }
 }
 
