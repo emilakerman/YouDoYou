@@ -38,7 +38,7 @@ class _UserCardFormState extends State<UserCardForm> {
             ),
             // 2) add a button that opens up a datepicker
             Container(
-              padding: EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 style: const ButtonStyle(
                     // foregroundColor: MaterialStatePropertyAll(Colors.white),
@@ -51,6 +51,6 @@ class _UserCardFormState extends State<UserCardForm> {
           ],
         ),
       ),
-    );;
+    );
   }
 }

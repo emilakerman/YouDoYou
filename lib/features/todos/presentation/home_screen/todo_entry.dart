@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
@@ -25,12 +24,12 @@ class _ToDoItemState extends State<ToDoEntry> {
 
     void handleDelete() {}
 
-    return Container(
+    return SizedBox(
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
+          const Icon(
             AppIcons.addPhoto,
             color: Colors.grey,
             size: 35,
@@ -41,12 +40,12 @@ class _ToDoItemState extends State<ToDoEntry> {
             children: [
               Text(
                 widget.entry.description,
-                style: TextStyle(overflow: TextOverflow.ellipsis),
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
               ),
               Text(
                 "${widget.entry.creationDate}",
                 // DateFormat.yMMMd().format(widget.entry.creationDate!),
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ],
           ),
@@ -76,7 +75,7 @@ class _ToDoItemState extends State<ToDoEntry> {
                 //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     AppIcons.deleteIcon,
                     color: Colors.red,
                     size: 35,
