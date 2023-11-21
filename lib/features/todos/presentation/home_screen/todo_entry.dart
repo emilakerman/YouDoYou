@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_icons.dart';
-import 'package:youdoyou/home_screen/models/todo_item.dart';
+import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
 class ToDoEntry extends StatefulWidget {
-  final ToDoItem entry;
+  final TodoModel entry;
   const ToDoEntry({required this.entry, super.key});
 
   @override
@@ -14,11 +16,13 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
-    void handleCheck() {
-      setState(() {
-        widget.entry.isDone = !widget.entry.isDone;
-      });
+    void handleCheck({required WidgetRef ref}) {
+      ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
+      // setState(() {
+      //   widget.entry.isDone = !widget.entry.isDone;
+      // });
     }
+
     void handleDelete() {}
 
     return Container(
@@ -40,9 +44,10 @@ class _ToDoItemState extends State<ToDoEntry> {
                 style: TextStyle(overflow: TextOverflow.ellipsis),
               ),
               Text(
-                DateFormat.yMMMd().format(widget.entry.creationDate!),
+                "${widget.entry.creationDate}",
+                // DateFormat.yMMMd().format(widget.entry.creationDate!),
                 style: TextStyle(fontSize: 15),
-                ),
+              ),
             ],
           ),
           Container(
@@ -51,20 +56,24 @@ class _ToDoItemState extends State<ToDoEntry> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                  onPressed: handleCheck,
-                  icon: widget.entry.isDone == false
-                      ? Icon(
-                          AppIcons.notCheckIcon,
-                          color: Colors.grey,
-                          size: 35,
-                        )
-                      : Icon(
-                          AppIcons.checkIcon,
-                          color: Colors.green,
-                          size: 35,
-                        ),
+                Consumer(
+                  builder: (_, ref, __) => IconButton(
+                    onPressed: () => handleCheck(ref: ref),
+                    //TODO(Any): Update the isDone state.
+                    icon: widget.entry.isDone == false
+                        ? const Icon(
+                            AppIcons.notCheckIcon,
+                            color: Colors.grey,
+                            size: 35,
+                          )
+                        : const Icon(
+                            AppIcons.checkIcon,
+                            color: Colors.green,
+                            size: 35,
+                          ),
+                  ),
                 ),
+                //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
                   onPressed: () {},
                   icon: Icon(

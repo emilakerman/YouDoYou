@@ -18,11 +18,11 @@ class User {
     this.name = name;
   }
 
-  void get getProfilePicture async{
+  void get getProfilePicture async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String imagePath = prefs.getString('imagePath') ?? '';
     if (imagePath.isNotEmpty) {
-        profilePicture = imagePath;
+      profilePicture = imagePath;
     }
   }
 

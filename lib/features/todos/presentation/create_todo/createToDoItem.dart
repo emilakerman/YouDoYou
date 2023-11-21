@@ -91,10 +91,10 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   }
 
 //TODO(Any): Put this function in utils.
-  String getTodaysDate() {
-    DateTime today = DateTime.now();
-    return "${today.year}-${today.month}-${today.day}";
-  }
+  // String getTodaysDate() {
+  //   DateTime today = DateTime.now();
+  //   return "${today.year}-${today.month}-${today.day}";
+  // }
 
   void _setTodoObject({required WidgetRef ref}) {
     ref
@@ -104,9 +104,9 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
     ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeCreationDate(getTodaysDate().toString());
+    // ref
+    //     .read(createToDoItemControllerProvider.notifier)
+    //     .changeCreationDate(getTodaysDate().toString());
   }
 
   //TODO(Any): This function looks a bit messy and should probably be shortened or similar.

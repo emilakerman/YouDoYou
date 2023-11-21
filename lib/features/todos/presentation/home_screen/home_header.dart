@@ -21,13 +21,12 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   void initState() {
-    user.getProfilePicture;
+    // user.getProfilePicture;
     super.initState();
   }
 
   _getImage() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         user.setProfilePicture = image.path;

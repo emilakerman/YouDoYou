@@ -1,41 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoModel {
+  String? id;
   String title;
   String description;
-  // Maybe DateTime instead of string?
-  String creationDate;
+  String? creationDate;
   String endDate;
   // String or "image" data type?
   String? image;
-  // This is the user, so maybe not a string but some ID?
   String author;
+  bool isDone;
 
   TodoModel({
+    this.id,
     required this.title,
     required this.description,
     required this.creationDate,
     required this.endDate,
     this.image,
     required this.author,
+    required this.isDone,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'creationDate': creationDate,
       'endDate': endDate,
       'image': image,
-      'author': author
+      'author': author,
+      'isDone': isDone,
     };
   }
 
   TodoModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : title = doc.data()!['title'],
+      : id = doc.data()!['id'],
+        title = doc.data()!['title'],
         description = doc.data()!['description'],
         creationDate = doc.data()!['creationDate'],
         endDate = doc.data()!['endDate'],
         image = doc.data()!['image'],
-        author = doc.data()!['author'];
+        author = doc.data()!['author'],
+        isDone = doc.data()!['isDone'];
 }
