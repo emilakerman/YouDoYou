@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/features/todos/data/firestore_storage_service.dart';
@@ -42,25 +41,5 @@ class FirebaseDataService {
     return snapshot.docs
         .map((docSnapshot) => TodoModel.fromDocumentSnapshot(docSnapshot))
         .toList();
-  }
-
-  Future<void> loadSingleTodo(String id) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await FirebaseFirestore.instance
-              .collection('Todos')
-              .doc("2023-11-22 14:10:56.897199")
-              .get();
-
-      if (documentSnapshot.exists) {
-        // Document exists, you can access the data using documentSnapshot.data()
-        Map<String, dynamic> data = documentSnapshot.data()!;
-        print('Todo Data: $data');
-      } else {
-        print('Todo with ID  does not exist.');
-      }
-    } catch (e) {
-      print('Error retrieving todo: $e');
-    }
   }
 }

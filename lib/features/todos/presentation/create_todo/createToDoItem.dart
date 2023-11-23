@@ -72,16 +72,15 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     ref
         .read(createToDoItemControllerProvider.notifier)
         .changeEndDate(_selectedDate.toString());
-    // ref
-    //     .read(createToDoItemControllerProvider.notifier)
-    //     .changeCreationDate(getTodaysDate().toString());
+    ref.watch(createToDoItemControllerProvider);
   }
 
-  //TODO(Any): This function looks a bit messy and should probably be shortened or similar.
   Future<void> _createTodoItem({required WidgetRef ref}) async {
     FirebaseDataService dataService = FirebaseDataService();
     _setTodoObject(ref: ref);
-    await dataService.addTodo(ref, _image);
+    await dataService.addTodo(ref, _image).then((_) {
+      context.pop();
+    });
   }
 
   @override
@@ -153,7 +152,6 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
           builder: (_, ref, __) => ElevatedButton(
             onPressed: () {
               _createTodoItem(ref: ref);
-              //context.pop();
             },
             child: const Text('Save'),
           ),

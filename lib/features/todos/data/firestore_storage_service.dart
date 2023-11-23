@@ -8,7 +8,7 @@ class FirestoreStorageService {
     Reference ref = _storage.ref().child("images/").child(imageName);
     print(image);
     UploadTask uploadTask = ref.putFile(image);
-    await uploadTask;
+    await uploadTask.whenComplete(() {});
     return uploadTask.snapshot.ref.getDownloadURL();
   }
 }
