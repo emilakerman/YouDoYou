@@ -69,9 +69,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     ref
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeEndDate(_selectedDate.toString());
+    ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
     ref.watch(createToDoItemControllerProvider);
   }
 

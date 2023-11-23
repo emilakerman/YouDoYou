@@ -31,7 +31,7 @@ Widget _buildFAB({
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return CreateItemWidget();
+            return const CreateItemWidget();
           },
         );
       }

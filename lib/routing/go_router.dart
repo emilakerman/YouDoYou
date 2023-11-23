@@ -20,14 +20,12 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'home',
               name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) =>
-                  const Placeholder(),
+              builder: (BuildContext context, GoRouterState state) => const Placeholder(),
               routes: [
                 GoRoute(
                   path: 'detail',
                   name: AppRoutes.detail.name,
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const Placeholder(),
+                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
                 ),
               ],
             ),

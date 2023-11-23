@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
-  const ToDoEntry({required this.entry, super.key});
+  final String id;
+  const ToDoEntry({required this.entry, super.key, required this.id});
 
   @override
   State<ToDoEntry> createState() => _ToDoItemState();
@@ -20,9 +22,9 @@ class _ToDoItemState extends State<ToDoEntry> {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
     }
 
-    void handleDelete() {}
+    FirebaseDataService dataService = FirebaseDataService();
 
-    return Container(
+    return SizedBox(
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,18 +36,16 @@ class _ToDoItemState extends State<ToDoEntry> {
             children: [
               Text(
                 widget.entry.description,
-                style: TextStyle(overflow: TextOverflow.ellipsis),
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
               ),
               Text(
                 "${widget.entry.creationDate}",
                 // DateFormat.yMMMd().format(widget.entry.creationDate!),
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ],
           ),
           Container(
-            //margin: EdgeInsets.only(left: 30),
-            //decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 1)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -66,10 +66,9 @@ class _ToDoItemState extends State<ToDoEntry> {
                           ),
                   ),
                 ),
-                //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(
+                  onPressed: () => dataService.deleteFromFirestore(widget.id),
+                  icon: const Icon(
                     AppIcons.deleteIcon,
                     color: Colors.red,
                     size: 35,
