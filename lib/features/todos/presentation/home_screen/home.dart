@@ -12,7 +12,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //title: 'YouDoYou',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondary),
@@ -23,12 +22,15 @@ class Home extends StatelessWidget {
           title: Text(title),
           backgroundColor: AppColors.complement,
         ),
-        body: const Column(
-          children: [
-            HomeHeader(),
-            TodoList(),
-            ReceivedToDoList(),
-          ],
+        body: const SingleChildScrollView(
+          child: Column(
+            children: [
+              HomeHeader(),
+              TodoList(title: "To Do List", isDone: false),
+              TodoList(title: "Completed Todos", isDone: true),
+              // TodoList(title: "Received Todos"),
+            ],
+          ),
         ),
         floatingActionButton: buildFABRow(context: context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

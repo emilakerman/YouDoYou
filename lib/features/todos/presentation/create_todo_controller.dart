@@ -43,4 +43,9 @@ class CreateToDoItemController extends _$CreateToDoItemController {
   }
 }
 
+// This list contains the uncompleted TODOS.
 final listViewProvider = StateProvider<List<TodoModel>>((ref) => []);
+// This list contains **completed** TODOS.
+final completedListViewProvider = StateProvider<List<TodoModel>>((ref) => []);
+// This list contains TODOS shared with the users.
+final sharedWithMeListViewProvider = StateProvider<List<TodoModel>>((ref) => []);

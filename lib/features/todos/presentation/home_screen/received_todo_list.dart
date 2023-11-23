@@ -26,7 +26,7 @@ class ReceivedToDoList extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 23,
+                fontSize: Sizes.p20,
               ),
             ),
           ),
