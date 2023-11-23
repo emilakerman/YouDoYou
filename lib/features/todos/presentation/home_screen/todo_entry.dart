@@ -18,9 +18,6 @@ class _ToDoItemState extends State<ToDoEntry> {
   Widget build(BuildContext context) {
     void handleCheck({required WidgetRef ref}) {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
-      // setState(() {
-      //   widget.entry.isDone = !widget.entry.isDone;
-      // });
     }
 
     void handleDelete() {}
@@ -30,11 +27,7 @@ class _ToDoItemState extends State<ToDoEntry> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
-            AppIcons.addPhoto,
-            color: Colors.grey,
-            size: 35,
-          ),
+          Image(image: NetworkImage(widget.entry.image ?? "")),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
