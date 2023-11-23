@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
-import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/home_screen/widgets/todo_item.dart';
+import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 
 class TodoList extends ConsumerStatefulWidget {
   const TodoList({super.key});
@@ -57,7 +57,8 @@ class TodoListState extends ConsumerState<TodoList> {
             margin: EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
               color: AppColors.extra,
-              border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
+              border: Border.all(
+                  color: AppColors.primary, width: 2, style: BorderStyle.solid),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             child: const Text(

@@ -4,8 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
-import 'package:youdoyou/home_screen/models/user.dart';
-import 'package:youdoyou/home_screen/widgets/user_card_form.dart';
+import 'package:youdoyou/features/authentication/domain/user.dart';
+import 'package:youdoyou/features/todos/presentation/home_screen/user_card_form.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -26,7 +26,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   _getImage() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         user.setProfilePicture = image.path;
