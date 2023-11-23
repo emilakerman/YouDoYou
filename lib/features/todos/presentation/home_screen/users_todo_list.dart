@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
-import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 

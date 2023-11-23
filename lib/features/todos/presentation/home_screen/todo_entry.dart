@@ -20,9 +20,6 @@ class _ToDoItemState extends State<ToDoEntry> {
   Widget build(BuildContext context) {
     void handleCheck({required WidgetRef ref}) {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
-      // setState(() {
-      //   widget.entry.isDone = !widget.entry.isDone;
-      // });
     }
 
     FirebaseDataService dataService = FirebaseDataService();
@@ -32,11 +29,7 @@ class _ToDoItemState extends State<ToDoEntry> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Icon(
-            AppIcons.addPhoto,
-            color: Colors.grey,
-            size: 35,
-          ),
+          Image(image: NetworkImage(widget.entry.image ?? "")),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,8 +46,6 @@ class _ToDoItemState extends State<ToDoEntry> {
             ],
           ),
           Container(
-            //margin: EdgeInsets.only(left: 30),
-            //decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 1)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

@@ -14,6 +14,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     creationDate: DateFormat.yMMMd().format(DateTime.now()).toString(),
     endDate: '',
     author: '',
+    image: '',
     isDone: false,
   );
   @override
