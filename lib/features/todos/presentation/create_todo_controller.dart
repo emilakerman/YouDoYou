@@ -7,6 +7,7 @@ part 'create_todo_controller.g.dart';
 
 @riverpod
 class CreateToDoItemController extends _$CreateToDoItemController {
+  
   TodoModel newTodoModel = TodoModel(
     id: DateTime.now().toString(),
     title: '',
@@ -16,6 +17,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     author: '',
     isDone: false,
   );
+  
   @override
   TodoModel build() {
     return newTodoModel;

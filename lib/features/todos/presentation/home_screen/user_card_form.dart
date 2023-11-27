@@ -8,9 +8,9 @@ class UserCardForm extends StatefulWidget {
 }
 
 class _UserCardFormState extends State<UserCardForm> {
-    final _titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-    void _submitData() {
+  void _submitData() {
     final enteredName = _titleController.text;
 
     if (enteredName.isEmpty) {
@@ -38,7 +38,7 @@ class _UserCardFormState extends State<UserCardForm> {
             ),
             // 2) add a button that opens up a datepicker
             Container(
-              padding: EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 style: const ButtonStyle(
                     // foregroundColor: MaterialStatePropertyAll(Colors.white),
@@ -47,10 +47,10 @@ class _UserCardFormState extends State<UserCardForm> {
                 onPressed: _submitData,
                 child: const Text('Save'),
               ),
-            )
+            ),
           ],
         ),
       ),
-    );;
+    );
   }
 }

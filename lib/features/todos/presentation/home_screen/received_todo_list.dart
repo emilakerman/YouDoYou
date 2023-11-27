@@ -14,7 +14,7 @@ class ReceivedToDoList extends StatelessWidget {
           Container(
             height: 30,
             width: 290,
-            margin: EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
               color: AppColors.extra,
               border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),

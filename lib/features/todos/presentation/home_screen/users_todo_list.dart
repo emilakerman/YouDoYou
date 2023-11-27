@@ -5,7 +5,7 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/home_screen/widgets/todo_item.dart';
+import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 
 class TodoList extends ConsumerStatefulWidget {
   const TodoList({super.key});
@@ -28,21 +28,6 @@ class TodoListState extends ConsumerState<TodoList> {
     // testAddItem();
   }
 
-  void testAddItem() {
-    FirebaseFirestore.instance.collection('user_todos').add(
-      {
-        'id': DateTime.now().toString(),
-        'title': 'whatever3',
-        'description': 'do this and that and more of that',
-        'creationDate': DateTime.now().toString(),
-        'endDate': DateTime.now().toString(),
-        'isDone': false,
-        'image': null,
-        'author': 'joel',
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     ref.watch(listViewProvider);
@@ -54,7 +39,7 @@ class TodoListState extends ConsumerState<TodoList> {
           Container(
             height: 30,
             width: 290,
-            margin: EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
               color: AppColors.extra,
               border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
@@ -76,7 +61,7 @@ class TodoListState extends ConsumerState<TodoList> {
               // itemCount: itemsList.length,
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                   elevation: 5,
                   // child: Text(ref.read(listViewProvider.notifier).state[index].title),
                   child: ToDoEntry(
@@ -92,7 +77,22 @@ class TodoListState extends ConsumerState<TodoList> {
   }
 }
 
+//notifyListeners() in update functions
 
+  // void testAddItem() {
+  //   FirebaseFirestore.instance.collection('user_todos').add(
+  //     {
+  //       'id': DateTime.now().toString(),
+  //       'title': 'whatever3',
+  //       'description': 'do this and that and more of that',
+  //       'creationDate': DateTime.now().toString(),
+  //       'endDate': DateTime.now().toString(),
+  //       'isDone': false,
+  //       'image': null,
+  //       'author': 'joel',
+  //     },
+  //   );
+  // }
 
 
 
@@ -112,3 +112,24 @@ class TodoListState extends ConsumerState<TodoList> {
 //             return ToDoEntry(entry: item);
 //           },
 //         );
+
+
+// void updateTodo(String id, TodoModel updatedTodo){
+//   final entryIndex = listViewProvider.indexWhere((todo)=> todo.id == id);
+//   //.removeWhere(id==id)
+//   if(entryIndex >= 0){
+//     listViewProvider[entryIndex] = updatedTodo;
+//   }else{
+//     print(...);
+//   }
+
+// }
+
+// void update(TodoModel updatedPerson){
+//   final index = people.indexOf(updatedPerson);
+//   TodoModel oldPerson = people[index];
+//   if(oldPerson.id == updatedPerson.id){
+//     people[index] = updatedPerson;
+//   }
+//   notifyListeners();
+// }

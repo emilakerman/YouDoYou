@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
@@ -16,21 +17,29 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
-    void handleCheck({required WidgetRef ref}) {
+    FirebaseDataService dataService = FirebaseDataService();
+
+    void handleCheck({required WidgetRef ref}) async {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
-      // setState(() {
-      //   widget.entry.isDone = !widget.entry.isDone;
+      //dataService.updateTodo();
+
+      // ref.read(listViewProvider.notifier).update((state) => null);
+      // final entryProvided = ref.watch(listViewProvider.select((entry) =>
+      //     entry.firstWhere((element) => element.id == widget.entry.id)));
+
+      // await db.collection('Todos').doc(widget.entry.id).update({
+      //   'isDone': entryProvided.isDone,
       // });
     }
 
     void handleDelete() {}
 
-    return Container(
+    return SizedBox(
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
+          const Icon(
             AppIcons.addPhoto,
             color: Colors.grey,
             size: 35,
@@ -41,12 +50,12 @@ class _ToDoItemState extends State<ToDoEntry> {
             children: [
               Text(
                 widget.entry.description,
-                style: TextStyle(overflow: TextOverflow.ellipsis),
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
               ),
               Text(
                 "${widget.entry.creationDate}",
                 // DateFormat.yMMMd().format(widget.entry.creationDate!),
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ],
           ),
@@ -57,26 +66,31 @@ class _ToDoItemState extends State<ToDoEntry> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => handleCheck(ref: ref),
-                    //TODO(Any): Update the isDone state.
-                    icon: widget.entry.isDone == false
-                        ? const Icon(
-                            AppIcons.notCheckIcon,
-                            color: Colors.grey,
-                            size: 35,
-                          )
-                        : const Icon(
-                            AppIcons.checkIcon,
-                            color: Colors.green,
-                            size: 35,
-                          ),
-                  ),
+                  builder: (_, ref, __) {
+                    final entryProvided = ref.watch(listViewProvider.select(
+                        (entry) => entry.firstWhere(
+                            (element) => element.id == widget.entry.id)));
+                    return IconButton(
+                      onPressed: () => handleCheck(ref: ref),
+                      //TODO(Any): Update the isDone state.
+                      icon: entryProvided.isDone == false
+                          ? const Icon(
+                              AppIcons.notCheckIcon,
+                              color: Colors.grey,
+                              size: 35,
+                            )
+                          : const Icon(
+                              AppIcons.checkIcon,
+                              color: Colors.green,
+                              size: 35,
+                            ),
+                    );
+                  },
                 ),
                 //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     AppIcons.deleteIcon,
                     color: Colors.red,
                     size: 35,
