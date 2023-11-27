@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/user_card_form.dart';
 
@@ -26,8 +27,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   _getImage() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         user.setProfilePicture = image.path;
@@ -37,9 +37,9 @@ class _HomeHeaderState extends State<HomeHeader> {
     }
   }
 
-  void _startEditUserCard(BuildContext ctx) {
+  void _startEditUserCard(BuildContext context) {
     showModalBottomSheet(
-      context: ctx,
+      context: context,
       builder: (_) {
         return const UserCardForm();
       },
@@ -61,11 +61,11 @@ class _HomeHeaderState extends State<HomeHeader> {
             Container(
               height: 90,
               width: 150,
-              margin: const EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: Sizes.p12, right: Sizes.p12),
               decoration: BoxDecoration(
                   color: AppColors.primary,
                   border: Border.all(color: Colors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+                  borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

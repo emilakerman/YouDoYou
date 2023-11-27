@@ -29,7 +29,6 @@ class Home extends StatelessWidget {
               TodoList(title: "To Do List", isDone: false),
               TodoList(title: "Completed Todos", isDone: true),
               //TODO(Any): Implement new collection in firestore with shared todos and add to this widget.
-              // TodoList(title: "Received Todos"),
             ],
           ),
         ),

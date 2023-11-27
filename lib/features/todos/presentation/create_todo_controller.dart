@@ -41,6 +41,10 @@ class CreateToDoItemController extends _$CreateToDoItemController {
   void toggleIsDone() {
     state.isDone = !state.isDone;
   }
+
+  void changeImage(String imageUrl) {
+    state.image = imageUrl;
+  }
 }
 
 // This list contains the uncompleted TODOS.

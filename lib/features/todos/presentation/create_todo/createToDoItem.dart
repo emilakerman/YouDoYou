@@ -84,25 +84,21 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return AlertDialog(
       backgroundColor: Colors.blueGrey,
       scrollable: true,
       title: const Text("Create Todo"),
       content: SizedBox(
-        height: height * 0.35,
         width: width,
         child: Form(
             child: Column(
           children: [
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.cabin), labelText: 'Title'),
+              decoration: const InputDecoration(icon: Icon(Icons.cabin), labelText: 'Title'),
               controller: _titleController,
             ),
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.note), labelText: 'Description'),
+              decoration: const InputDecoration(icon: Icon(Icons.note), labelText: 'Description'),
               controller: _descriptionController,
             ),
             TextFormField(
