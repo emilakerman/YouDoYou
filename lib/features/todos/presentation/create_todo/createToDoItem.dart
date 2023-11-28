@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/data/image_picker.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
@@ -70,6 +71,10 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
     ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
+    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeAuthor(firebaseAuthService.getUser()!.uid.toString());
     ref.watch(createToDoItemControllerProvider);
   }
 

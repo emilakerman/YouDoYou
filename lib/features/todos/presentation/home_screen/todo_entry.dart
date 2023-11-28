@@ -21,27 +21,26 @@ class _ToDoItemState extends State<ToDoEntry> {
     FirebaseDataService dataService = FirebaseDataService();
 
     Future<void> handleCheck({required WidgetRef ref}) async {
-      ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
+      // ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
 
-      final entryProvided = ref
-          .watch(listViewProvider.notifier)
-          .state
-          .firstWhere((element) => element.id == widget.entry.id);
-      final entryIndex = ref
-          .watch(listViewProvider.notifier)
-          .state
-          .indexWhere((element) => element.id == widget.entry.id);
-      print('widget entry ${widget.entry.isDone}'); 
-      print('entry id from ref ${entryProvided.id}'); 
-      print('entry index $entryIndex');
-      
-      if (widget.entry.id != null) {
-        await dataService.updateItem(
-            entryId: widget.entry.id!, entryProperty: entryProvided.isDone);
-      }
+      // final entryProvided = ref
+      //     .watch(listViewProvider.notifier)
+      //     .state
+      //     .firstWhere((element) => element.id == widget.entry.id);
+      // final entryIndex = ref
+      //     .watch(listViewProvider.notifier)
+      //     .state
+      //     .indexWhere((element) => element.id == widget.entry.id);
+      // print('widget entry ${widget.entry.isDone}');
+      // print('entry id from ref ${entryProvided.id}');
+      // print('entry index $entryIndex');
+
+      // if (widget.id != null) {
+      await dataService.updateItem(entryId: widget.id, entryProperty: !widget.entry.isDone);
+      // }
     }
 
-    FirebaseDataService dataService = FirebaseDataService();
+    // FirebaseDataService dataService = FirebaseDataService();
 
     return SizedBox(
       height: 60,
@@ -69,12 +68,11 @@ class _ToDoItemState extends State<ToDoEntry> {
               children: [
                 Consumer(
                   builder: (_, ref, __) {
-                    final entryProvided = ref.watch(listViewProvider.select(
-                        (entry) => entry.firstWhere(
-                            (element) => element.id == widget.entry.id)));
+                    // final entryProvided = ref.watch(listViewProvider.select(
+                    //     (entry) => entry.firstWhere((element) => element.id == widget.entry.id)));
                     return IconButton(
                       onPressed: () => handleCheck(ref: ref),
-                      icon: entryProvided.isDone == false
+                      icon: widget.entry.isDone == false
                           ? const Icon(
                               AppIcons.notCheckIcon,
                               color: Colors.grey,
@@ -104,4 +102,3 @@ class _ToDoItemState extends State<ToDoEntry> {
     );
   }
 }
-
