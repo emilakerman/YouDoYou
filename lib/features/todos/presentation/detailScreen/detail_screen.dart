@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 
@@ -26,8 +29,7 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
     _selectedDate = parseDateStringToDate();
     _titleController = TextEditingController(text: widget.entry?.title ?? "");
-    _descriptionController =
-        TextEditingController(text: widget.entry?.description ?? "");
+    _descriptionController = TextEditingController(text: widget.entry?.description ?? "");
   }
 
   @override
@@ -63,15 +65,17 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
-  void update() async {
-    FirebaseDataService dataService = FirebaseDataService();
+  void update(WidgetRef ref) async {
     print(widget.entry?.id);
-    await dataService
+    await ref
+        .read(firestoreRepositoryProvider)
         .editTodoInFirestore(
-            title: _titleController.text,
-            description: _descriptionController.text,
-            id: widget.id,
-            endDate: _selectedDate.toString())
+          title: _titleController.text,
+          description: _descriptionController.text,
+          id: widget.id,
+          endDate: _selectedDate.toString(),
+          uid: ref.watch(authStateProvider),
+        )
         .then((_) {
       context.pop();
     });
@@ -85,9 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Column(
           children: [
             gapH32,
-            _isEditMode
-                ? TextField(controller: _titleController)
-                : Text(widget.entry?.title ?? ""),
+            _isEditMode ? TextField(controller: _titleController) : Text(widget.entry?.title ?? ""),
             Image(image: NetworkImage(widget.entry?.image ?? "")),
             _isEditMode
                 ? TextField(controller: _descriptionController)
@@ -107,21 +109,20 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   )
                 : Text(widget.entry?.endDate ?? ""),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () => context.pop(),
-                    icon: const Icon(Icons.arrow_back)),
-                IconButton(
-                    onPressed: () {
-                      _toggleEditMode();
-                    },
-                    icon: const Icon(Icons.edit)),
-                _isEditMode
-                    ? TextButton(
-                        onPressed: () => {update()}, child: const Text("save"))
-                    : const SizedBox.shrink()
-              ],
+            Consumer(
+              builder: (context, ref, child) => Row(
+                children: [
+                  IconButton(onPressed: () => context.pop(), icon: const Icon(Icons.arrow_back)),
+                  IconButton(
+                      onPressed: () {
+                        _toggleEditMode();
+                      },
+                      icon: const Icon(Icons.edit)),
+                  _isEditMode
+                      ? TextButton(onPressed: () => {update(ref)}, child: const Text("save"))
+                      : const SizedBox.shrink()
+                ],
+              ),
             ),
           ],
         ),

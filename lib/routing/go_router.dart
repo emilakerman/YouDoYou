@@ -17,20 +17,18 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) => 
-            AuthPage(),
+          builder: (BuildContext context, GoRouterState state) => AuthPage(),
           routes: [
             GoRoute(
               path: 'home',
               name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) =>
-                  Home(),
+              builder: (BuildContext context, GoRouterState state) => Home(),
+            ),
             GoRoute(
               path: 'detail',
               name: AppRoutes.detail.name,
               builder: (BuildContext context, GoRouterState state) {
-                final Map<String, dynamic> args =
-                    state.extra as Map<String, dynamic>;
+                final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
 
                 final TodoModel entry = args['entry'] as TodoModel;
                 final String id = args['id'] as String;
@@ -47,8 +45,7 @@ final goRouterProvider = Provider<GoRouter>(
       /// The `errorBuilder` is a callback function that is used to build a widget when the GoRouter
       /// encounters an error or when a route is not found. In this case, it returns a `Text` widget with the
       /// text "Error". This widget will be displayed when there is an error or when a route is not found.
-      errorBuilder: (BuildContext context, GoRouterState state) =>
-          const CustomErrorWidget(),
+      errorBuilder: (BuildContext context, GoRouterState state) => const CustomErrorWidget(),
     );
   },
 );

@@ -21,11 +21,12 @@ class FirebaseAuthService {
     }
   }
 
-  //   Future logIn(email, password) async {
-  //   await _auth.(email: email, password: password);
-  // }
-
   Future<void> signOut() async => await _auth.signOut();
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 }
+
+// Provider that contains the current user UID.
+final authStateProvider = Provider<String>((ref) {
+  return FirebaseAuthService().getUser()!.uid.toString();
+});

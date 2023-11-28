@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/routing/routes.dart';
-
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
@@ -20,10 +18,11 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
-    FirebaseDataService dataService = FirebaseDataService();
-
     Future<void> handleCheck({required WidgetRef ref}) async {
-      await dataService.updateItem(entryId: widget.id, entryProperty: !widget.entry.isDone);
+      await ref.read(firestoreRepositoryProvider).updateItem(
+          uid: ref.watch(authStateProvider),
+          entryId: widget.id,
+          entryProperty: !widget.entry.isDone);
     }
 
     return SizedBox(
@@ -74,19 +73,22 @@ class _ToDoItemState extends State<ToDoEntry> {
                     );
                   },
                 ),
-                IconButton(
-                  onPressed: () => dataService.deleteFromFirestore(widget.id),
-                  icon: const Icon(
-                    AppIcons.deleteIcon,
-                    color: Colors.red,
-                    size: 35,
+                Consumer(
+                  builder: (_, ref, __) => IconButton(
+                    onPressed: () => ref
+                        .read(firestoreRepositoryProvider)
+                        .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
+                    icon: const Icon(
+                      AppIcons.deleteIcon,
+                      color: Colors.red,
+                      size: 35,
+                    ),
                   ),
                 ),
                 IconButton(
                     onPressed: () {
                       print(widget.entry.title);
-                      context.go('/detail',
-                          extra: {'entry': widget.entry, 'id': widget.id});
+                      context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
                     },
                     icon: const Icon(Icons.edit)),
               ],

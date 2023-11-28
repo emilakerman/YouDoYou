@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 
 class TodoList extends ConsumerStatefulWidget {
@@ -23,28 +22,26 @@ class TodoList extends ConsumerStatefulWidget {
 }
 
 class TodoListState extends ConsumerState<TodoList> {
-  FirebaseDataService dataService = FirebaseDataService();
-
-  void convertList() async {
-    ref.read(listViewProvider.notifier).state = await dataService.loadTodos();
-  }
-
   @override
   void initState() {
     super.initState();
-    convertList();
-    // testAddItem();
   }
 
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> todoStream = FirebaseFirestore.instance
-        .collection('Todos')
+        .collection('Users')
+        .doc(ref.watch(authStateProvider))
+        .collection("Todos")
         .where('isDone', isEqualTo: false)
         .snapshots();
 
-    final Stream<QuerySnapshot> todoStreamIsDone =
-        FirebaseFirestore.instance.collection('Todos').where('isDone', isEqualTo: true).snapshots();
+    final Stream<QuerySnapshot> todoStreamIsDone = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(ref.watch(authStateProvider))
+        .collection("Todos")
+        .where('isDone', isEqualTo: true)
+        .snapshots();
 
     return Card(
       color: AppColors.complement,
@@ -92,20 +89,16 @@ class TodoListState extends ConsumerState<TodoList> {
                         return const CircularProgressIndicator();
                       }
 
+                      List<DocumentSnapshot<Map<String, dynamic>>> sortedDocs =
+                          snapshot.data!.docs.cast<DocumentSnapshot<Map<String, dynamic>>>();
+                      sortedDocs.sort((a, b) {
+                        // Convert strings to DateTime for proper sorting
+                        DateTime aTime = DateTime.parse(a['id']);
+                        DateTime bTime = DateTime.parse(b['id']);
+                        return bTime.compareTo(aTime);
+                      });
 
-                    List<DocumentSnapshot<Map<String, dynamic>>> sortedDocs =
-                        snapshot.data!.docs
-                            .cast<DocumentSnapshot<Map<String, dynamic>>>();
-                    sortedDocs.sort((a, b) {
-                      // Convert strings to DateTime for proper sorting
-                      DateTime aTime = DateTime.parse(a['id']);
-                      DateTime bTime = DateTime.parse(b['id']);
-                      return bTime.compareTo(aTime);
-                    });
-
-                    DocumentSnapshot<Map<String, dynamic>> document =
-                        sortedDocs[index];
-
+                      DocumentSnapshot<Map<String, dynamic>> document = sortedDocs[index];
 
                       return Card(
                         margin: const EdgeInsets.all(Sizes.p4),
