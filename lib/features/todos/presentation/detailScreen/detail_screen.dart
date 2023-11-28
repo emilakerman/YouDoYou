@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/constants/app_colors.dart';
+import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
@@ -80,24 +82,56 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.entry?.title ?? "Title",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold)),
+        iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            onPressed: _toggleEditMode,
+            icon: const Icon(
+              AppIcons.editIcon,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+        ],
+        backgroundColor: AppColors.complement,
+      ),
+      backgroundColor: AppColors.primary,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            gapH32,
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image(
+                  image: NetworkImage(widget.entry?.image ?? ""),
+                  fit: BoxFit.cover,
+                )),
             _isEditMode
                 ? TextField(controller: _titleController)
-                : Text(widget.entry?.title ?? ""),
-            Image(image: NetworkImage(widget.entry?.image ?? "")),
+                : Text(widget.entry?.title ?? "",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextField(controller: _descriptionController)
-                : Text(widget.entry?.description ?? ""),
+                : Text(widget.entry?.description ?? "",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextFormField(
                     readOnly: true,
                     onTap: () => _selectDate(context),
                     decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_month),
+                      icon: Icon(AppIcons.calendarIcon),
                       labelText: 'Select End Date',
                     ),
                     controller: TextEditingController(
@@ -109,14 +143,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 : Text(widget.entry?.endDate ?? ""),
             Row(
               children: [
-                IconButton(
-                    onPressed: () => context.pop(),
-                    icon: const Icon(Icons.arrow_back)),
-                IconButton(
-                    onPressed: () {
-                      _toggleEditMode();
-                    },
-                    icon: const Icon(Icons.edit)),
                 _isEditMode
                     ? TextButton(
                         onPressed: () => {update()}, child: const Text("save"))

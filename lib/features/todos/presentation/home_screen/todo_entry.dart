@@ -7,7 +7,6 @@ import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/routing/routes.dart';
 
-
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
   final String id;
@@ -23,7 +22,8 @@ class _ToDoItemState extends State<ToDoEntry> {
     FirebaseDataService dataService = FirebaseDataService();
 
     Future<void> handleCheck({required WidgetRef ref}) async {
-      await dataService.updateItem(entryId: widget.id, entryProperty: !widget.entry.isDone);
+      await dataService.updateItem(
+          entryId: widget.id, entryProperty: !widget.entry.isDone);
     }
 
     return SizedBox(

@@ -17,14 +17,12 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) => 
-            AuthPage(),
+          builder: (BuildContext context, GoRouterState state) => AuthPage(),
           routes: [
             GoRoute(
-              path: 'home',
-              name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) =>
-                  Home(),
+                path: 'home',
+                name: AppRoutes.home.name,
+                builder: (BuildContext context, GoRouterState state) => Home()),
             GoRoute(
               path: 'detail',
               name: AppRoutes.detail.name,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppIcons{
+class AppIcons {
   static const profileIcon = Icons.account_circle_outlined;
   static const editIcon = Icons.create;
   static const pictureIcon = Icons.add_a_photo_outlined;
