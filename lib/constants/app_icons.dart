@@ -11,4 +11,5 @@ class AppIcons{
   static const calendarIcon = Icons.calendar_month;
   static const checkIcon = Icons.check_box_outlined;
   static const notCheckIcon = Icons.check_box_outline_blank;
+  static const logOutIcon = Icons.logout_rounded;
 }

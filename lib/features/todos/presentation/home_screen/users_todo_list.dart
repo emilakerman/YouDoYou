@@ -23,6 +23,13 @@ class TodoListState extends ConsumerState<TodoList> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    convertList();
+    // testAddItem();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> todoStream =
         FirebaseFirestore.instance.collection('Todos').snapshots();

@@ -18,8 +18,27 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
-    void handleCheck({required WidgetRef ref}) {
+    FirebaseDataService dataService = FirebaseDataService();
+
+    Future<void> handleCheck({required WidgetRef ref}) async {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
+
+      final entryProvided = ref
+          .watch(listViewProvider.notifier)
+          .state
+          .firstWhere((element) => element.id == widget.entry.id);
+      final entryIndex = ref
+          .watch(listViewProvider.notifier)
+          .state
+          .indexWhere((element) => element.id == widget.entry.id);
+      print('widget entry ${widget.entry.isDone}'); 
+      print('entry id from ref ${entryProvided.id}'); 
+      print('entry index $entryIndex');
+      
+      if (widget.entry.id != null) {
+        await dataService.updateItem(
+            entryId: widget.entry.id!, entryProperty: entryProvided.isDone);
+      }
     }
 
     FirebaseDataService dataService = FirebaseDataService();
@@ -40,7 +59,6 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
               Text(
                 "${widget.entry.creationDate}",
-                // DateFormat.yMMMd().format(widget.entry.creationDate!),
                 style: const TextStyle(fontSize: 15),
               ),
             ],
@@ -50,21 +68,25 @@ class _ToDoItemState extends State<ToDoEntry> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => handleCheck(ref: ref),
-                    //TODO(Any): Update the isDone state.
-                    icon: widget.entry.isDone == false
-                        ? const Icon(
-                            AppIcons.notCheckIcon,
-                            color: Colors.grey,
-                            size: 35,
-                          )
-                        : const Icon(
-                            AppIcons.checkIcon,
-                            color: Colors.green,
-                            size: 35,
-                          ),
-                  ),
+                  builder: (_, ref, __) {
+                    final entryProvided = ref.watch(listViewProvider.select(
+                        (entry) => entry.firstWhere(
+                            (element) => element.id == widget.entry.id)));
+                    return IconButton(
+                      onPressed: () => handleCheck(ref: ref),
+                      icon: entryProvided.isDone == false
+                          ? const Icon(
+                              AppIcons.notCheckIcon,
+                              color: Colors.grey,
+                              size: 35,
+                            )
+                          : const Icon(
+                              AppIcons.checkIcon,
+                              color: Colors.green,
+                              size: 35,
+                            ),
+                    );
+                  },
                 ),
                 IconButton(
                   onPressed: () => dataService.deleteFromFirestore(widget.id),
@@ -82,3 +104,4 @@ class _ToDoItemState extends State<ToDoEntry> {
     );
   }
 }
+

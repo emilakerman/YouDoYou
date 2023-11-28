@@ -15,13 +15,14 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  var user = User();
+  User user = User.instance;
 
   final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
-    // user.getProfilePicture;
+    user.getProfilePicture;
+    user.getName;
     super.initState();
   }
 
@@ -58,6 +59,7 @@ class _HomeHeaderState extends State<HomeHeader> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // container has a row that contains the picture and the info card
             Container(
               height: 90,
               width: 150,
@@ -69,6 +71,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  //picture
                   user.profilePicture != null
                       ? Image.file(
                           File(user.profilePicture!),
@@ -81,6 +84,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                           color: Colors.grey,
                           size: 80,
                         ),
+                        //button img picker
                   IconButton(
                     padding: const EdgeInsets.only(top: 50),
                     onPressed: _getImage,
@@ -92,6 +96,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                 ],
               ),
             ),
+            //info card
             Container(
               height: 90,
               width: 200,
@@ -107,8 +112,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(left: 10),
-                        child: const Text(
-                          'UserName',
+                        child: 
+                        Text(
+                          'User: ${user.name}' ?? 'User: ',
                         ),
                       ),
                       Container(

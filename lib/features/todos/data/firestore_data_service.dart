@@ -36,6 +36,7 @@ class FirebaseDataService {
   }
 
   Future<List<TodoModel>> loadTodos() async {
+
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection('Todos').get();
     return snapshot.docs
@@ -50,5 +51,13 @@ class FirebaseDataService {
   /// be deleted from the Firestore collection.
   Future<void> deleteFromFirestore(String id) async {
     _db.collection('Todos').doc(id).delete();
+
+  }
+
+  // function to update one property in an item. for now test with isDone
+  Future<void> updateItem({required String entryId, required bool entryProperty}) async {
+          await _db.collection('Todos').doc(entryId).update({
+        'isDone': entryProperty,
+      });
   }
 }
