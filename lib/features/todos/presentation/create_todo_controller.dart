@@ -15,7 +15,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     endDate: '',
     author: '',
     image:
-        'https://firebasestorage.googleapis.com/v0/b/youdoyou-aeae2.appspot.com/o/placeholder.png?alt=media&token=9f15b74d-a555-434a-a932-6b7b66548bf7',
+        'https://firebasestorage.googleapis.com/v0/b/youdoyou-aeae2.appspot.com/o/placeholder.png?alt=media&token=bb5050d3-d33c-4b13-b7a1-e94ecd566727',
     isDone: false,
   );
 

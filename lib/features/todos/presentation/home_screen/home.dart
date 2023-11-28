@@ -12,7 +12,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     // TEMPORARY LOG OUT
     Future<void> _logOut() async {
       await FirebaseAuthService().signOut();
@@ -29,8 +28,7 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style: TextStyle(
-                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
           ),
           actions: [
             IconButton(
@@ -55,7 +53,7 @@ class Home extends StatelessWidget {
           ),
         ),
         floatingActionButton: buildFABRow(context: context),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

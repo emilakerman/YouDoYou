@@ -66,7 +66,6 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void update(WidgetRef ref) async {
-    print(widget.entry?.id);
     await ref
         .read(firestoreRepositoryProvider)
         .editTodoInFirestore(

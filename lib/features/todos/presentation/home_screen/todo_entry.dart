@@ -87,7 +87,6 @@ class _ToDoItemState extends State<ToDoEntry> {
                 ),
                 IconButton(
                     onPressed: () {
-                      print(widget.entry.title);
                       context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
                     },
                     icon: const Icon(Icons.edit)),
