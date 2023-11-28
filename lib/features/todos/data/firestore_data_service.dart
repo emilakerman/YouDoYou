@@ -34,10 +34,18 @@ class FirebaseDataService {
     _db.collection('Todos').doc(id).delete();
   }
 
+
+  Future<void> editTodoInFirestore(
+      {String? title, String? description, String? id, String? endDate}) async {
+    print("idddddd$id");
+    await _db.collection('Todos').doc(id).update(
+        {"title": title, "description": description, "endDate": endDate});
+
   // function to update one property in an item. for now test with isDone
   Future<void> updateItem({required String entryId, required bool entryProperty}) async {
     await _db.collection('Todos').doc(entryId).update({
       'isDone': entryProperty,
     });
+
   }
 }

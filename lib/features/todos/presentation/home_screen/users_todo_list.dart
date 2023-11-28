@@ -5,6 +5,7 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 
@@ -91,16 +92,20 @@ class TodoListState extends ConsumerState<TodoList> {
                         return const CircularProgressIndicator();
                       }
 
-                      List<DocumentSnapshot<Map<String, dynamic>>> sortedDocs =
-                          snapshot.data!.docs.cast<DocumentSnapshot<Map<String, dynamic>>>();
-                      sortedDocs.sort((a, b) {
-                        // Convert strings to DateTime for proper sorting
-                        DateTime aTime = DateTime.parse(a['id']);
-                        DateTime bTime = DateTime.parse(b['id']);
-                        return bTime.compareTo(aTime);
-                      });
 
-                      DocumentSnapshot<Map<String, dynamic>> document = sortedDocs[index];
+                    List<DocumentSnapshot<Map<String, dynamic>>> sortedDocs =
+                        snapshot.data!.docs
+                            .cast<DocumentSnapshot<Map<String, dynamic>>>();
+                    sortedDocs.sort((a, b) {
+                      // Convert strings to DateTime for proper sorting
+                      DateTime aTime = DateTime.parse(a['id']);
+                      DateTime bTime = DateTime.parse(b['id']);
+                      return bTime.compareTo(aTime);
+                    });
+
+                    DocumentSnapshot<Map<String, dynamic>> document =
+                        sortedDocs[index];
+
 
                       return Card(
                         margin: const EdgeInsets.all(Sizes.p4),
