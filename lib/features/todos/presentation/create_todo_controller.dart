@@ -7,6 +7,7 @@ part 'create_todo_controller.g.dart';
 
 @riverpod
 class CreateToDoItemController extends _$CreateToDoItemController {
+  
   TodoModel newTodoModel = TodoModel(
     id: DateTime.now().toString(),
     title: '',
@@ -17,6 +18,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     image: '',
     isDone: false,
   );
+  
   @override
   TodoModel build() {
     return newTodoModel;
@@ -38,7 +40,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.author = newAuthor;
   }
 
-  void toggleIsDone() {
+  void toggleIsDone() async{
     state.isDone = !state.isDone;
   }
 
