@@ -3,11 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:youdoyou/common_widgets/error_widget.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/detailScreen/detail_screen.dart';
+import 'package:youdoyou/features/authentication/presentation/auth_page.dart';
+import 'package:youdoyou/features/authentication/presentation/auth_screen.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-//TODO(Any): Replace all Placeholder() with correct widget/page.
 
 final goRouterProvider = Provider<GoRouter>(
   (ref) {
@@ -17,13 +17,14 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/',
           name: AppRoutes.root.name,
-          builder: (BuildContext context, GoRouterState state) => const Home(),
+          builder: (BuildContext context, GoRouterState state) => 
+            AuthPage(),
           routes: [
             GoRoute(
-                path: 'home',
-                name: AppRoutes.home.name,
-                builder: (BuildContext context, GoRouterState state) =>
-                    const Placeholder()),
+              path: 'home',
+              name: AppRoutes.home.name,
+              builder: (BuildContext context, GoRouterState state) =>
+                  Home(),
             GoRoute(
               path: 'detail',
               name: AppRoutes.detail.name,

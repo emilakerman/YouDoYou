@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,7 @@ import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/routing/routes.dart';
+
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
@@ -20,11 +20,11 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
-    void handleCheck({required WidgetRef ref}) {
-      ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
-    }
-
     FirebaseDataService dataService = FirebaseDataService();
+
+    Future<void> handleCheck({required WidgetRef ref}) async {
+      await dataService.updateItem(entryId: widget.id, entryProperty: !widget.entry.isDone);
+    }
 
     return SizedBox(
       height: 60,
@@ -48,7 +48,6 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
               Text(
                 "${widget.entry.creationDate}",
-                // DateFormat.yMMMd().format(widget.entry.creationDate!),
                 style: const TextStyle(fontSize: 15),
               ),
             ],
@@ -58,21 +57,22 @@ class _ToDoItemState extends State<ToDoEntry> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => handleCheck(ref: ref),
-                    //TODO(Any): Update the isDone state.
-                    icon: widget.entry.isDone == false
-                        ? const Icon(
-                            AppIcons.notCheckIcon,
-                            color: Colors.grey,
-                            size: 35,
-                          )
-                        : const Icon(
-                            AppIcons.checkIcon,
-                            color: Colors.green,
-                            size: 35,
-                          ),
-                  ),
+                  builder: (_, ref, __) {
+                    return IconButton(
+                      onPressed: () => handleCheck(ref: ref),
+                      icon: widget.entry.isDone == false
+                          ? const Icon(
+                              AppIcons.notCheckIcon,
+                              color: Colors.grey,
+                              size: 35,
+                            )
+                          : const Icon(
+                              AppIcons.checkIcon,
+                              color: Colors.green,
+                              size: 35,
+                            ),
+                    );
+                  },
                 ),
                 IconButton(
                   onPressed: () => dataService.deleteFromFirestore(widget.id),

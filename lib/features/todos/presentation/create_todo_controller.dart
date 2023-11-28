@@ -7,6 +7,7 @@ part 'create_todo_controller.g.dart';
 
 @riverpod
 class CreateToDoItemController extends _$CreateToDoItemController {
+  
   TodoModel newTodoModel = TodoModel(
     id: DateTime.now().toString(),
     title: '',
@@ -17,6 +18,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     image: '',
     isDone: false,
   );
+  
   @override
   TodoModel build() {
     return newTodoModel;
@@ -38,9 +40,18 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.author = newAuthor;
   }
 
-  void toggleIsDone() {
+  void toggleIsDone() async{
     state.isDone = !state.isDone;
+  }
+
+  void changeImage(String imageUrl) {
+    state.image = imageUrl;
   }
 }
 
+// This list contains the uncompleted TODOS.
 final listViewProvider = StateProvider<List<TodoModel>>((ref) => []);
+// This list contains **completed** TODOS.
+final completedListViewProvider = StateProvider<List<TodoModel>>((ref) => []);
+// This list contains TODOS shared with the users.
+final sharedWithMeListViewProvider = StateProvider<List<TodoModel>>((ref) => []);

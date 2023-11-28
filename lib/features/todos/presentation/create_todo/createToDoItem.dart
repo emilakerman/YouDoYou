@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/data/image_picker.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
@@ -70,6 +71,10 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
     ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
+    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeAuthor(firebaseAuthService.getUser()!.uid.toString());
     ref.watch(createToDoItemControllerProvider);
   }
 
@@ -84,25 +89,21 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return AlertDialog(
       backgroundColor: Colors.blueGrey,
       scrollable: true,
       title: const Text("Create Todo"),
       content: SizedBox(
-        height: height * 0.35,
         width: width,
         child: Form(
             child: Column(
           children: [
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.cabin), labelText: 'Title'),
+              decoration: const InputDecoration(icon: Icon(Icons.cabin), labelText: 'Title'),
               controller: _titleController,
             ),
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.note), labelText: 'Description'),
+              decoration: const InputDecoration(icon: Icon(Icons.note), labelText: 'Description'),
               controller: _descriptionController,
             ),
             TextFormField(
