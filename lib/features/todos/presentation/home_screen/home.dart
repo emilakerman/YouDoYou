@@ -4,7 +4,6 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/received_todo_list.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/users_todo_list.dart';
 
 class Home extends StatelessWidget {
@@ -22,10 +21,11 @@ class Home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondary),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.extra),
         useMaterial3: true,
       ),
       home: Scaffold(
+        backgroundColor: AppColors.primary,
         appBar: AppBar(
           title: Text(
             title,
@@ -44,12 +44,15 @@ class Home extends StatelessWidget {
           ],
           backgroundColor: AppColors.complement,
         ),
-        body: const Column(
-          children: [
-            HomeHeader(),
-            TodoList(),
-            ReceivedToDoList(),
-          ],
+        body: const SingleChildScrollView(
+          child: Column(
+            children: [
+              HomeHeader(),
+              TodoList(title: "To Do List", isDone: false),
+              TodoList(title: "Completed Todos", isDone: true),
+              //TODO(Any): Implement new collection in firestore with shared todos and add to this widget.
+            ],
+          ),
         ),
         floatingActionButton: buildFABRow(context: context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
