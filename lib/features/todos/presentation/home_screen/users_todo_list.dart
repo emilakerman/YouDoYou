@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
@@ -38,7 +39,8 @@ class TodoListState extends ConsumerState<TodoList> {
             margin: const EdgeInsets.only(top: Sizes.p4),
             decoration: BoxDecoration(
               color: AppColors.extra,
-              border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
+              border: Border.all(
+                  color: AppColors.primary, width: 2, style: BorderStyle.solid),
               borderRadius: const BorderRadius.all(Radius.circular(Sizes.p12)),
             ),
             child: const Text(
@@ -54,7 +56,8 @@ class TodoListState extends ConsumerState<TodoList> {
             height: 270,
             width: MediaQuery.of(context).size.width,
             child: StreamBuilder<QuerySnapshot>(
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return const Text('Something went wrong');
                 }
@@ -73,7 +76,8 @@ class TodoListState extends ConsumerState<TodoList> {
                     }
 
                     List<DocumentSnapshot<Map<String, dynamic>>> sortedDocs =
-                        snapshot.data!.docs.cast<DocumentSnapshot<Map<String, dynamic>>>();
+                        snapshot.data!.docs
+                            .cast<DocumentSnapshot<Map<String, dynamic>>>();
                     sortedDocs.sort((a, b) {
                       // Convert strings to DateTime for proper sorting
                       DateTime aTime = DateTime.parse(a['id']);
@@ -81,7 +85,8 @@ class TodoListState extends ConsumerState<TodoList> {
                       return bTime.compareTo(aTime);
                     });
 
-                    DocumentSnapshot<Map<String, dynamic>> document = sortedDocs[index];
+                    DocumentSnapshot<Map<String, dynamic>> document =
+                        sortedDocs[index];
 
                     return Card(
                       margin: const EdgeInsets.all(Sizes.p4),

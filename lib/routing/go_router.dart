@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/common_widgets/error_widget.dart';
+import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/detailScreen/detail_screen.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,16 +20,24 @@ final goRouterProvider = Provider<GoRouter>(
           builder: (BuildContext context, GoRouterState state) => const Home(),
           routes: [
             GoRoute(
-              path: 'home',
-              name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) => const Placeholder(),
-              routes: [
-                GoRoute(
-                  path: 'detail',
-                  name: AppRoutes.detail.name,
-                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
-                ),
-              ],
+                path: 'home',
+                name: AppRoutes.home.name,
+                builder: (BuildContext context, GoRouterState state) =>
+                    const Placeholder()),
+            GoRoute(
+              path: 'detail',
+              name: AppRoutes.detail.name,
+              builder: (BuildContext context, GoRouterState state) {
+                final Map<String, dynamic> args =
+                    state.extra as Map<String, dynamic>;
+
+                final TodoModel entry = args['entry'] as TodoModel;
+                final String id = args['id'] as String;
+
+                // Now you can use 'entry' and 'id' in your DetailScreen.
+
+                return DetailScreen(entry: entry, id: id);
+              },
             ),
           ],
         ),

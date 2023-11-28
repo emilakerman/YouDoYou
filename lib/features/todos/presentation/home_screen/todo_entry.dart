@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
+import 'package:youdoyou/routing/routes.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
@@ -29,7 +31,13 @@ class _ToDoItemState extends State<ToDoEntry> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image(image: NetworkImage(widget.entry.image ?? "")),
+          Image(
+            image: NetworkImage(
+              widget.entry.image ?? "",
+            ),
+            width: 30,
+            height: 30,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,6 +82,13 @@ class _ToDoItemState extends State<ToDoEntry> {
                     size: 35,
                   ),
                 ),
+                IconButton(
+                    onPressed: () {
+                      print(widget.entry.title);
+                      context.go('/detail',
+                          extra: {'entry': widget.entry, 'id': widget.id});
+                    },
+                    icon: const Icon(Icons.edit)),
               ],
             ),
           ),

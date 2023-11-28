@@ -51,4 +51,11 @@ class FirebaseDataService {
   Future<void> deleteFromFirestore(String id) async {
     _db.collection('Todos').doc(id).delete();
   }
+
+  Future<void> editTodoInFirestore(
+      {String? title, String? description, String? id, String? endDate}) async {
+    print("idddddd$id");
+    await _db.collection('Todos').doc(id).update(
+        {"title": title, "description": description, "endDate": endDate});
+  }
 }
