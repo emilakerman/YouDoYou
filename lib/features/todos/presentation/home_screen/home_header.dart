@@ -7,7 +7,6 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/user_card_form.dart';
 
-
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
 
@@ -28,7 +27,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   _getImage() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         user.setProfilePicture = image.path;
@@ -42,7 +42,7 @@ class _HomeHeaderState extends State<HomeHeader> {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return UserCardForm();
+        return const UserCardForm();
       },
     );
   }

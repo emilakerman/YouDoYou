@@ -8,7 +8,8 @@ import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
-  const ToDoEntry({required this.entry, super.key});
+  final String id;
+  const ToDoEntry({required this.entry, super.key, required this.id});
 
   @override
   State<ToDoEntry> createState() => _ToDoItemState();
@@ -40,18 +41,14 @@ class _ToDoItemState extends State<ToDoEntry> {
       }
     }
 
-    void handleDelete() {}
+    FirebaseDataService dataService = FirebaseDataService();
 
     return SizedBox(
       height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Icon(
-            AppIcons.addPhoto,
-            color: Colors.grey,
-            size: 35,
-          ),
+          Image(image: NetworkImage(widget.entry.image ?? "")),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +59,6 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
               Text(
                 "${widget.entry.creationDate}",
-                // DateFormat.yMMMd().format(widget.entry.creationDate!),
                 style: const TextStyle(fontSize: 15),
               ),
             ],
@@ -93,7 +89,7 @@ class _ToDoItemState extends State<ToDoEntry> {
                   },
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => dataService.deleteFromFirestore(widget.id),
                   icon: const Icon(
                     AppIcons.deleteIcon,
                     color: Colors.red,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youdoyou/constants/app_colors.dart';
+import 'package:youdoyou/constants/app_sizes.dart';
 
 class ReceivedToDoList extends StatelessWidget {
   const ReceivedToDoList({super.key});
@@ -8,17 +9,18 @@ class ReceivedToDoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.extra,
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(Sizes.p12),
       child: Column(
         children: [
           Container(
-            height: 30,
+            height: Sizes.p32,
             width: 290,
-            margin: const EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: Sizes.p4),
+
             decoration: BoxDecoration(
               color: AppColors.extra,
               border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(Sizes.p12)),
             ),
             child: const Text(
               'Received ToDo List:',
@@ -35,7 +37,7 @@ class ReceivedToDoList extends StatelessWidget {
               itemCount: 8,
               itemBuilder: (context, index) {
                 return const Card(
-                  margin: EdgeInsets.all(5),
+                  margin: EdgeInsets.all(Sizes.p4),
                   elevation: 5,
                   child: Row(
                     children: [

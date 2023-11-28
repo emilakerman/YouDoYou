@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
           ],
           backgroundColor: AppColors.complement,
         ),
-        body: Column(
+        body: const Column(
           children: [
             HomeHeader(),
             TodoList(),
