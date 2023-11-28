@@ -18,11 +18,13 @@ class FirebaseDataService {
       ref.read(createToDoItemControllerProvider.notifier).changeImage(imageUrl);
     }
 
+
     TodoModel userInputTodoModel = await ref.watch(createToDoItemControllerProvider);
 
     DocumentReference userDocumentRef = _db.collection("Users").doc(uid);
     CollectionReference todosCollectionRef = userDocumentRef.collection("Todos");
     await todosCollectionRef.add(userInputTodoModel.toMap());
+
   }
 
   /// The function deletes a document with a specific ID from a Firestore collection.
@@ -45,10 +47,12 @@ class FirebaseDataService {
         .update({"title": title, "description": description, "endDate": endDate});
   }
 
+
   // Update isDone on firestore
   Future<void> updateItem(
       {required String entryId, required bool entryProperty, required String uid}) async {
     await _db.collection('Users').doc(uid).collection('Todos').doc(entryId).update({
+
       'isDone': entryProperty,
     });
   }

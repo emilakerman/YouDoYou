@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
 import 'package:youdoyou/features/todos/data/image_picker.dart';
@@ -89,20 +91,26 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return AlertDialog(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: AppColors.secondary,
       scrollable: true,
-      title: const Text("Create Todo"),
+      title: const Text(
+        "Create Todo",
+        style: TextStyle(
+            color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+      ),
       content: SizedBox(
         width: width,
         child: Form(
             child: Column(
           children: [
             TextFormField(
-              decoration: const InputDecoration(icon: Icon(Icons.cabin), labelText: 'Title'),
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.title), labelText: 'Title'),
               controller: _titleController,
             ),
             TextFormField(
-              decoration: const InputDecoration(icon: Icon(Icons.note), labelText: 'Description'),
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.description), labelText: 'Description'),
               controller: _descriptionController,
             ),
             TextFormField(
