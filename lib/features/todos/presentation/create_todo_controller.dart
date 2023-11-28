@@ -39,7 +39,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.author = newAuthor;
   }
 
-  void toggleIsDone() {
+  void toggleIsDone() async{
     state.isDone = !state.isDone;
   }
 }

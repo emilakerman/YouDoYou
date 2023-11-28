@@ -21,11 +21,7 @@ class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   AuthMode authMode = AuthMode.Login;
-  // final _emailController = TextEditingController();
-  // final _passwordController = TextEditingController();
 
-//map to store the globalkey
-//store this in riverpod?
   final Map<String, String> _authData = {
     'email': '',
     'password': '',

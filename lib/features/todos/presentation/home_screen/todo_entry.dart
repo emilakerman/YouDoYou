@@ -19,17 +19,25 @@ class _ToDoItemState extends State<ToDoEntry> {
   Widget build(BuildContext context) {
     FirebaseDataService dataService = FirebaseDataService();
 
-    void handleCheck({required WidgetRef ref}) async {
+    Future<void> handleCheck({required WidgetRef ref}) async {
       ref.read(createToDoItemControllerProvider.notifier).toggleIsDone();
-      //dataService.updateTodo();
 
-      // ref.read(listViewProvider.notifier).update((state) => null);
-      // final entryProvided = ref.watch(listViewProvider.select((entry) =>
-      //     entry.firstWhere((element) => element.id == widget.entry.id)));
-
-      // await db.collection('Todos').doc(widget.entry.id).update({
-      //   'isDone': entryProvided.isDone,
-      // });
+      final entryProvided = ref
+          .watch(listViewProvider.notifier)
+          .state
+          .firstWhere((element) => element.id == widget.entry.id);
+      final entryIndex = ref
+          .watch(listViewProvider.notifier)
+          .state
+          .indexWhere((element) => element.id == widget.entry.id);
+      print('widget entry ${widget.entry.isDone}'); 
+      print('entry id from ref ${entryProvided.id}'); 
+      print('entry index $entryIndex');
+      
+      if (widget.entry.id != null) {
+        await dataService.updateItem(
+            entryId: widget.entry.id!, entryProperty: entryProvided.isDone);
+      }
     }
 
     void handleDelete() {}
@@ -60,8 +68,6 @@ class _ToDoItemState extends State<ToDoEntry> {
             ],
           ),
           Container(
-            //margin: EdgeInsets.only(left: 30),
-            //decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 1)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -72,7 +78,6 @@ class _ToDoItemState extends State<ToDoEntry> {
                             (element) => element.id == widget.entry.id)));
                     return IconButton(
                       onPressed: () => handleCheck(ref: ref),
-                      //TODO(Any): Update the isDone state.
                       icon: entryProvided.isDone == false
                           ? const Icon(
                               AppIcons.notCheckIcon,
@@ -87,7 +92,6 @@ class _ToDoItemState extends State<ToDoEntry> {
                     );
                   },
                 ),
-                //TODO(Any): Delete the TODO in Firestore.
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(
@@ -104,3 +108,4 @@ class _ToDoItemState extends State<ToDoEntry> {
     );
   }
 }
+

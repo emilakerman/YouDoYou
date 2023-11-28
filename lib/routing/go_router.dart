@@ -19,7 +19,6 @@ final goRouterProvider = Provider<GoRouter>(
           name: AppRoutes.root.name,
           builder: (BuildContext context, GoRouterState state) => 
             AuthPage(),
-            //(),
             //Home(),
           routes: [
             GoRoute(

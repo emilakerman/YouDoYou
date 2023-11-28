@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     // TEMPORARY LOG OUT
     Future<void> _logOut() async {
       await FirebaseAuthService().signOut();

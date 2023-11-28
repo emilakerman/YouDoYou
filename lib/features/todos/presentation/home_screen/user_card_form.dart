@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
+import 'package:youdoyou/features/authentication/domain/user.dart';
 
 class UserCardForm extends StatefulWidget {
   const UserCardForm({super.key});
@@ -8,18 +12,36 @@ class UserCardForm extends StatefulWidget {
 }
 
 class _UserCardFormState extends State<UserCardForm> {
+  var userId = FirebaseAuthService().getUser() ?? '';
+  User user = User.instance;
+  final ImagePicker _imagePicker = ImagePicker();
   final _titleController = TextEditingController();
 
-  void _submitData() {
-    final enteredName = _titleController.text;
+  String? _selectedPicture;
 
-    if (enteredName.isEmpty) {
+  _startImagePicker() async {
+    final XFile? image =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // setState(() {
+      //   user.setProfilePicture = image.path;
+      // });
+      _selectedPicture = image.path;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('imagePath$userId', image.path);
+    }
+  }
+
+  void _submitData() {
+    setState(() {
+      user.setName = _titleController.text;
+      user.setProfilePicture = _selectedPicture!;
+    });
+
+//image too
+    if (user.name == null) {
       return;
     }
-    //if im passing the data from parent
-    // widget.handleUserName(
-    //   name,
-    // );
     Navigator.of(context).pop();
   }
 
@@ -32,9 +54,38 @@ class _UserCardFormState extends State<UserCardForm> {
         child: Column(
           children: [
             TextField(
-              decoration: const InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'User Name'),
               controller: _titleController,
               onSubmitted: (_) => _submitData(),
+            ),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  // 5) if theres a date show something else. before this step it was just Text(No date chosen)
+                  //it is needed to use ! because it is an optional variable
+                  //wrap the Text in a Expanded to create space between Text and Button
+                  Expanded(
+                    child: Text(
+                      _selectedPicture == null
+                          ? 'No picture selected'
+                          : 'Selected Picture',
+                    ),
+                  ),
+                  //Text('No Date Chosen'),
+                  TextButton(
+                    style: const ButtonStyle(
+                      //foregroundColor = color of the letters
+                      foregroundColor: MaterialStatePropertyAll(Colors.blue),
+                    ),
+                    onPressed: _startImagePicker,
+                    child: const Text(
+                      'Choose Picture',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
             // 2) add a button that opens up a datepicker
             Container(
