@@ -10,14 +10,7 @@ import 'package:youdoyou/routing/routes.dart';
 Widget buildFABRow({
   required BuildContext context,
 }) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      _buildFAB(icon: Icons.home, context: context),
-      _buildFAB(icon: Icons.add, context: context),
-      _buildFAB(icon: Icons.line_style_outlined, context: context),
-    ],
-  );
+  return _buildFAB(icon: Icons.add, context: context);
 }
 
 Widget _buildFAB({

@@ -72,20 +72,17 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     ref
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeEndDate(DateFormat.yMMMd().format(_selectedDate!).toString());
-    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeAuthor(firebaseAuthService.getUser()!.uid.toString());
+    ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
+    ref.read(createToDoItemControllerProvider.notifier).changeAuthor(ref.watch(authStateProvider));
     ref.watch(createToDoItemControllerProvider);
   }
 
   Future<void> _createTodoItem({required WidgetRef ref}) async {
-    FirebaseDataService dataService = FirebaseDataService();
     _setTodoObject(ref: ref);
-    await dataService.addTodo(ref, _image).then((_) {
+    await ref
+        .read(firestoreRepositoryProvider)
+        .addTodo(ref, _image, ref.watch(authStateProvider))
+        .then((_) {
       context.pop();
     });
   }

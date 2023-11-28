@@ -7,7 +7,6 @@ part 'create_todo_controller.g.dart';
 
 @riverpod
 class CreateToDoItemController extends _$CreateToDoItemController {
-  
   TodoModel newTodoModel = TodoModel(
     id: DateTime.now().toString(),
     title: '',
@@ -15,10 +14,11 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     creationDate: DateFormat.yMMMd().format(DateTime.now()).toString(),
     endDate: '',
     author: '',
-    image: '',
+    image:
+        'https://firebasestorage.googleapis.com/v0/b/youdoyou-aeae2.appspot.com/o/placeholder.png?alt=media&token=bb5050d3-d33c-4b13-b7a1-e94ecd566727',
     isDone: false,
   );
-  
+
   @override
   TodoModel build() {
     return newTodoModel;
@@ -40,7 +40,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     state.author = newAuthor;
   }
 
-  void toggleIsDone() async{
+  void toggleIsDone() async {
     state.isDone = !state.isDone;
   }
 
