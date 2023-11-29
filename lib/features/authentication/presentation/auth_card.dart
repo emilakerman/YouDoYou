@@ -96,7 +96,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(
                     labelText: 'E-Mail',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: AppColors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -125,7 +125,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: AppColors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -154,7 +154,7 @@ class _AuthCardState extends State<AuthCard> {
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(color: AppColors.white),
                         borderRadius: BorderRadius.circular(Sizes.p12),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -185,7 +185,7 @@ class _AuthCardState extends State<AuthCard> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       backgroundColor: AppColors.complement,
-                      foregroundColor: Colors.white,
+                      foregroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: Sizes.p8),
                     ),
                     onPressed: _submit,

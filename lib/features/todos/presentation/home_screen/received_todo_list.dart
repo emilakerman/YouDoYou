@@ -16,7 +16,6 @@ class ReceivedToDoList extends StatelessWidget {
             height: Sizes.p32,
             width: 290,
             margin: const EdgeInsets.only(top: Sizes.p4),
-
             decoration: BoxDecoration(
               color: AppColors.extra,
               border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
@@ -26,7 +25,7 @@ class ReceivedToDoList extends StatelessWidget {
               'Received ToDo List:',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.white,
                 fontSize: Sizes.p20,
               ),
             ),
@@ -46,7 +45,7 @@ class ReceivedToDoList extends StatelessWidget {
                         child: Icon(
                           Icons.add_a_photo_outlined,
                           size: 50,
-                          color: Colors.black,
+                          color: AppColors.black,
                         ),
                       ),
                     ],

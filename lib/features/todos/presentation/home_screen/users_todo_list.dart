@@ -61,7 +61,7 @@ class TodoListState extends ConsumerState<TodoList> {
                 widget.title,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontSize: Sizes.p20,
                 ),
               ),

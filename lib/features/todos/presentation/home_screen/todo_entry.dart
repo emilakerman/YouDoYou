@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
@@ -62,12 +63,12 @@ class _ToDoItemState extends State<ToDoEntry> {
                       icon: widget.entry.isDone == false
                           ? const Icon(
                               AppIcons.notCheckIcon,
-                              color: Colors.grey,
+                              color: AppColors.grey,
                               size: 35,
                             )
                           : const Icon(
                               AppIcons.checkIcon,
-                              color: Colors.green,
+                              color: AppColors.green,
                               size: 35,
                             ),
                     );
@@ -80,7 +81,7 @@ class _ToDoItemState extends State<ToDoEntry> {
                         .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
                     icon: const Icon(
                       AppIcons.deleteIcon,
-                      color: Colors.red,
+                      color: AppColors.red,
                       size: 35,
                     ),
                   ),

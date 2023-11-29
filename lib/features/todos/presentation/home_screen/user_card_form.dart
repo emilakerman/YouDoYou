@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 
@@ -72,8 +73,7 @@ class _UserCardFormState extends State<UserCardForm> {
                   //Text('No Date Chosen'),
                   TextButton(
                     style: const ButtonStyle(
-                      //foregroundColor = color of the letters
-                      foregroundColor: MaterialStatePropertyAll(Colors.blue),
+                      foregroundColor: MaterialStatePropertyAll(AppColors.blue),
                     ),
                     onPressed: _startImagePicker,
                     child: const Text(
@@ -88,10 +88,7 @@ class _UserCardFormState extends State<UserCardForm> {
             Container(
               padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
-                style: const ButtonStyle(
-                    // foregroundColor: MaterialStatePropertyAll(Colors.white),
-                    // backgroundColor: MaterialStatePropertyAll(Colors.blue),
-                    ),
+                style: const ButtonStyle(),
                 onPressed: _submitData,
                 child: const Text('Save'),
               ),

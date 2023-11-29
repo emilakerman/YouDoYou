@@ -66,7 +66,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               margin: const EdgeInsets.only(left: Sizes.p12, right: Sizes.p12),
               decoration: BoxDecoration(
                   color: AppColors.primary,
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: AppColors.black),
                   borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -81,7 +81,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                         )
                       : const Icon(
                           AppIcons.profileIcon,
-                          color: Colors.grey,
+                          color: AppColors.grey,
                           size: 80,
                         ),
                   //button img picker
@@ -90,7 +90,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     onPressed: _getImage,
                     icon: const Icon(
                       AppIcons.editIcon,
-                      color: Colors.black,
+                      color: AppColors.black,
                     ),
                   ),
                 ],
@@ -102,7 +102,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               width: 200,
               decoration: BoxDecoration(
                   color: AppColors.additional,
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: AppColors.black),
                   borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     },
                     icon: const Icon(
                       AppIcons.editIcon,
-                      color: Colors.black,
+                      color: AppColors.black,
                     ),
                   ),
                 ],

@@ -28,14 +28,15 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+            style:
+                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold),
           ),
           actions: [
             IconButton(
               onPressed: logOut,
               icon: const Icon(
                 AppIcons.logOutIcon,
-                color: Colors.white,
+                color: AppColors.white,
                 size: 30,
               ),
             ),

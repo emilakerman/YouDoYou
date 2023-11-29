@@ -84,14 +84,15 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.entry?.title ?? "Title",
-            style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
-        iconTheme: const IconThemeData(color: Colors.white),
+            style:
+                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+        iconTheme: const IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
             onPressed: _toggleEditMode,
             icon: const Icon(
               AppIcons.editIcon,
-              color: Colors.white,
+              color: AppColors.white,
               size: 30,
             ),
           ),
@@ -113,12 +114,12 @@ class _DetailScreenState extends State<DetailScreen> {
                 ? TextField(controller: _titleController)
                 : Text(widget.entry?.title ?? "",
                     style: const TextStyle(
-                        color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextField(controller: _descriptionController)
                 : Text(widget.entry?.description ?? "",
                     style: const TextStyle(
-                        color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextFormField(
                     readOnly: true,
