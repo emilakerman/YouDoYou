@@ -40,7 +40,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
         });
       } else {
         if (kDebugMode) {
-          print("Image is null or invalid");
+          ("Image is null or invalid");
         }
       }
     } catch (e) {

@@ -8,9 +8,12 @@ import 'dart:async';
 
 class FirestoreDataRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  // final FirebaseStorageRepository _storageService = FirebaseStorageRepository();
 
-  Future<void> addTodo(WidgetRef ref, File? image, String uid) async {
+  Future<void> addTodo(
+    WidgetRef ref,
+    File? image,
+    String uid,
+  ) async {
     String? imageUrl;
 
     if (image != null) {
@@ -26,17 +29,20 @@ class FirestoreDataRepository {
   }
 
   /// The function deletes a document with a specific ID from a Firestore collection.
-  ///
-  /// Args:
-  ///   id (String): The id parameter is a string that represents the unique identifier of the document to
-  /// be deleted from the Firestore collection.
-  Future<void> deleteFromFirestore({required String id, required String uid}) async {
+  Future<void> deleteFromFirestore({
+    required String id,
+    required String uid,
+  }) async {
     await _db.collection('Users').doc(uid).collection('Todos').doc(id).delete();
   }
 
-  Future<void> editTodoInFirestore(
-      {String? title, String? description, String? id, String? endDate, String? uid}) async {
-    print("idddddd$id");
+  Future<void> editTodoInFirestore({
+    String? title,
+    String? description,
+    String? id,
+    String? endDate,
+    String? uid,
+  }) async {
     await _db
         .collection('Users')
         .doc(uid)
@@ -45,9 +51,12 @@ class FirestoreDataRepository {
         .update({"title": title, "description": description, "endDate": endDate});
   }
 
-  // Update isDone on firestore
-  Future<void> updateItem(
-      {required String entryId, required bool entryProperty, required String uid}) async {
+  // Update isDone value on firestore.
+  Future<void> updateItem({
+    required String entryId,
+    required bool entryProperty,
+    required String uid,
+  }) async {
     await _db.collection('Users').doc(uid).collection('Todos').doc(entryId).update({
       'isDone': entryProperty,
     });
