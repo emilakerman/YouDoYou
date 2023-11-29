@@ -13,7 +13,8 @@ String _$authStateHash() => r'169dbfac1ac31041bb22a58b30eec5616b20883a';
 final authStateProvider = AutoDisposeProvider<String>.internal(
   authState,
   name: r'authStateProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$authStateHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$authStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

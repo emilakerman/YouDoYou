@@ -20,8 +20,7 @@ class _UserCardFormState extends State<UserCardForm> {
   String? _selectedPicture;
 
   _startImagePicker() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       // setState(() {
       //   user.setProfilePicture = image.path;
@@ -67,9 +66,7 @@ class _UserCardFormState extends State<UserCardForm> {
                   //wrap the Text in a Expanded to create space between Text and Button
                   Expanded(
                     child: Text(
-                      _selectedPicture == null
-                          ? 'No picture selected'
-                          : 'Selected Picture',
+                      _selectedPicture == null ? 'No picture selected' : 'Selected Picture',
                     ),
                   ),
                   //Text('No Date Chosen'),

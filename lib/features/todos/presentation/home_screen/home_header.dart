@@ -84,7 +84,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                           color: Colors.grey,
                           size: 80,
                         ),
-                        //button img picker
+                  //button img picker
                   IconButton(
                     padding: const EdgeInsets.only(top: 50),
                     onPressed: _getImage,
@@ -103,7 +103,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               decoration: BoxDecoration(
                   color: AppColors.additional,
                   border: Border.all(color: Colors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+                  borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -112,8 +112,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(left: 10),
-                        child: 
-                        Text(
+                        child: Text(
                           'User: ${user.name}' ?? 'User: ',
                         ),
                       ),
