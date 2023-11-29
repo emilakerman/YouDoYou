@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
 

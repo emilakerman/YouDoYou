@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_colors.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
 import 'package:youdoyou/routing/routes.dart';
 
@@ -33,8 +32,6 @@ Widget _buildFAB({
         context.goNamed(AppRoutes.root.name);
       } else if (icon == Icons.add) {
         showCreateItemDialog(context);
-      } else if (icon == Icons.line_style_outlined) {
-        //TODO(Any): Implement navigation.
       }
     },
     backgroundColor: AppColors.secondary,

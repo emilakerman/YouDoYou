@@ -5,8 +5,6 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/routing/routes.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;

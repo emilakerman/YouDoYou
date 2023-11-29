@@ -57,7 +57,7 @@ class _UserCardFormState extends State<UserCardForm> {
               controller: _titleController,
               onSubmitted: (_) => _submitData(),
             ),
-            Container(
+            SizedBox(
               height: 70,
               child: Row(
                 children: [
