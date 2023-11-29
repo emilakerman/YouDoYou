@@ -8,13 +8,13 @@ import 'dart:async';
 
 class FirestoreDataRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final FirebaseStorageRepository _storageService = FirebaseStorageRepository();
+  // final FirebaseStorageRepository _storageService = FirebaseStorageRepository();
 
   Future<void> addTodo(WidgetRef ref, File? image, String uid) async {
     String? imageUrl;
 
     if (image != null) {
-      imageUrl = await _storageService.uploadImage(image);
+      imageUrl = await ref.read(firebaseStorageRepositoryProvider).uploadImage(image);
       ref.read(createToDoItemControllerProvider.notifier).changeImage(imageUrl);
     }
 

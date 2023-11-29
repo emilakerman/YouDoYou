@@ -7,7 +7,7 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -87,10 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.entry?.title ?? "Title",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold)),
+            style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
@@ -118,18 +115,13 @@ class _DetailScreenState extends State<DetailScreen> {
             _isEditMode
                 ? TextField(controller: _titleController)
                 : Text(widget.entry?.title ?? "",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
-
+                    style:
+                        TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextField(controller: _descriptionController)
                 : Text(widget.entry?.description ?? "",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextFormField(
                     readOnly: true,
@@ -145,7 +137,6 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   )
                 : Text(widget.entry?.endDate ?? ""),
-
             Consumer(
               builder: (context, ref, child) => Row(
                 children: [
@@ -160,7 +151,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       : const SizedBox.shrink()
                 ],
               ),
-
             ),
           ],
         ),

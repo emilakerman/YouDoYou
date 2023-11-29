@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/data/image_picker.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 
@@ -95,8 +95,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
       scrollable: true,
       title: const Text(
         "Create Todo",
-        style: TextStyle(
-            color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
       ),
       content: SizedBox(
         width: width,
@@ -104,13 +103,12 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
             child: Column(
           children: [
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.title), labelText: 'Title'),
+              decoration: const InputDecoration(icon: Icon(Icons.title), labelText: 'Title'),
               controller: _titleController,
             ),
             TextFormField(
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.description), labelText: 'Description'),
+              decoration:
+                  const InputDecoration(icon: Icon(Icons.description), labelText: 'Description'),
               controller: _descriptionController,
             ),
             TextFormField(
