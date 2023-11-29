@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youdoyou/features/todos/data/firestore_storage_service.dart';
+import 'package:youdoyou/features/todos/data/firebase_storage_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'dart:async';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class FirestoreDataRepository {
+part 'firestore_data_repository.g.dart';
+
+class FirestoreRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<void> addTodo(
@@ -64,6 +67,7 @@ class FirestoreDataRepository {
 }
 
 // Provider that contains an instance of Firestore.
-final firestoreRepositoryProvider = Provider<FirestoreDataRepository>((ref) {
-  return FirestoreDataRepository();
-});
+@Riverpod(keepAlive: true)
+FirestoreRepository firestoreRepository(FirestoreRepositoryRef ref) {
+  return FirestoreRepository();
+}

@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'firebase_storage_repository.g.dart';
 
 class FirebaseStorageRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -15,6 +16,7 @@ class FirebaseStorageRepository {
 }
 
 // Provider that contains an instance of Firebase Storage.
-final firebaseStorageRepositoryProvider = Provider<FirebaseStorageRepository>((ref) {
+@riverpod
+FirebaseStorageRepository firebaseStorageRepository(FirebaseStorageRepositoryRef ref) {
   return FirebaseStorageRepository();
-});
+}

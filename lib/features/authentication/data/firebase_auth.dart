@@ -2,6 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'firebase_auth.g.dart';
 
 class FirebaseAuthService {
   final _auth = FirebaseAuth.instance;
@@ -27,6 +30,7 @@ class FirebaseAuthService {
 }
 
 // Provider that contains the current user UID.
-final authStateProvider = Provider<String>((ref) {
+@riverpod
+String authState(AuthStateRef ref) {
   return FirebaseAuthService().getUser()!.uid.toString();
-});
+}
