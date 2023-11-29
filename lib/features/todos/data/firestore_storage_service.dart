@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class FirestoreStorageService {
+class FirebaseStorageRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   Future<String> uploadImage(File image) async {
     String imageName = "${DateTime.now().millisecondsSinceEpoch}.jpg";

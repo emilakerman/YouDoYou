@@ -6,9 +6,9 @@ import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'dart:async';
 
-class FirebaseDataService {
+class FirestoreDataRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final FirestoreStorageService _storageService = FirestoreStorageService();
+  final FirebaseStorageRepository _storageService = FirebaseStorageRepository();
 
   Future<void> addTodo(WidgetRef ref, File? image, String uid) async {
     String? imageUrl;
@@ -18,13 +18,11 @@ class FirebaseDataService {
       ref.read(createToDoItemControllerProvider.notifier).changeImage(imageUrl);
     }
 
-
     TodoModel userInputTodoModel = await ref.watch(createToDoItemControllerProvider);
 
     DocumentReference userDocumentRef = _db.collection("Users").doc(uid);
     CollectionReference todosCollectionRef = userDocumentRef.collection("Todos");
     await todosCollectionRef.add(userInputTodoModel.toMap());
-
   }
 
   /// The function deletes a document with a specific ID from a Firestore collection.
@@ -47,18 +45,16 @@ class FirebaseDataService {
         .update({"title": title, "description": description, "endDate": endDate});
   }
 
-
   // Update isDone on firestore
   Future<void> updateItem(
       {required String entryId, required bool entryProperty, required String uid}) async {
     await _db.collection('Users').doc(uid).collection('Todos').doc(entryId).update({
-
       'isDone': entryProperty,
     });
   }
 }
 
 // Provider that contains an instance of Firestore.
-final firestoreRepositoryProvider = Provider<FirebaseDataService>((ref) {
-  return FirebaseDataService();
+final firestoreRepositoryProvider = Provider<FirestoreDataRepository>((ref) {
+  return FirestoreDataRepository();
 });
