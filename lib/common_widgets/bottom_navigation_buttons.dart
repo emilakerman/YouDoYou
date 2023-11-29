@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_colors.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo/createToDoItem.dart';
-import 'package:youdoyou/routing/routes.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo/create_to_do_item.dart';
 
-/// The `buildFABRow` function returns a row of floating action buttons with different icons, and the
-/// `_buildFAB` function builds each individual floating action button.
 Widget buildFABRow({
   required BuildContext context,
 }) {
@@ -28,9 +24,7 @@ Widget _buildFAB({
         );
       }
 
-      if (icon == Icons.home) {
-        context.goNamed(AppRoutes.root.name);
-      } else if (icon == Icons.add) {
+      if (icon == Icons.add) {
         showCreateItemDialog(context);
       }
     },

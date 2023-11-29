@@ -14,10 +14,10 @@ class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key, this.id, this.entry});
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  DetailScreenState createState() => DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class DetailScreenState extends State<DetailScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   bool _isEditMode = false;

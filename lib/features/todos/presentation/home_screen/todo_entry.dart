@@ -52,47 +52,45 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
             ],
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Consumer(
-                  builder: (_, ref, __) {
-                    return IconButton(
-                      onPressed: () => handleCheck(ref: ref),
-                      icon: widget.entry.isDone == false
-                          ? const Icon(
-                              AppIcons.notCheckIcon,
-                              color: AppColors.grey,
-                              size: 35,
-                            )
-                          : const Icon(
-                              AppIcons.checkIcon,
-                              color: AppColors.green,
-                              size: 35,
-                            ),
-                    );
-                  },
-                ),
-                Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => ref
-                        .read(firestoreRepositoryProvider)
-                        .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
-                    icon: const Icon(
-                      AppIcons.deleteIcon,
-                      color: AppColors.red,
-                      size: 35,
-                    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Consumer(
+                builder: (_, ref, __) {
+                  return IconButton(
+                    onPressed: () => handleCheck(ref: ref),
+                    icon: widget.entry.isDone == false
+                        ? const Icon(
+                            AppIcons.notCheckIcon,
+                            color: AppColors.grey,
+                            size: 35,
+                          )
+                        : const Icon(
+                            AppIcons.checkIcon,
+                            color: AppColors.green,
+                            size: 35,
+                          ),
+                  );
+                },
+              ),
+              Consumer(
+                builder: (_, ref, __) => IconButton(
+                  onPressed: () => ref
+                      .read(firestoreRepositoryProvider)
+                      .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
+                  icon: const Icon(
+                    AppIcons.deleteIcon,
+                    color: AppColors.red,
+                    size: 35,
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
-                    },
-                    icon: const Icon(Icons.edit)),
-              ],
-            ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
+                  },
+                  icon: const Icon(Icons.edit)),
+            ],
           ),
         ],
       ),

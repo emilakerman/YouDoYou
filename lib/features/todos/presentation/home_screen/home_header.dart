@@ -113,7 +113,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                       Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          'User: ${user.name}' ?? 'User: ',
+                          'User: ${user.name}',
                         ),
                       ),
                       Container(
