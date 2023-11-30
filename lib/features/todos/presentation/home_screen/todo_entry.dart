@@ -6,55 +6,55 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/routing/routes.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
   final String id;
-  const ToDoEntry({required this.entry, super.key, required this.id});
+
+  const ToDoEntry({
+    required this.entry,
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<ToDoEntry> createState() => _ToDoItemState();
 }
 
 class _ToDoItemState extends State<ToDoEntry> {
+  Future<void> handleCheck({required WidgetRef ref}) async {
+    await ref.read(firestoreRepositoryProvider).updateItem(
+          uid: ref.watch(authStateProvider),
+          entryId: widget.id,
+          entryProperty: !widget.entry.isDone,
+          entry: widget.entry,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
-    
-    Future<void> handleCheck({required WidgetRef ref}) async {
-      await ref.read(firestoreRepositoryProvider).updateItem(
-            uid: ref.watch(authStateProvider),
-            entryId: widget.id,
-            entryProperty: !widget.entry.isDone,
-            entry: widget.entry,
-          );
-    }
-
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: [
-  //image--------------------------------------------------
+          // Image
           Container(
-            padding: EdgeInsets.only(left:4),
+            padding: const EdgeInsets.only(left: 4),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image(
-                image: NetworkImage(
-                  widget.entry.image ?? "",
-                ),
+                image: NetworkImage(widget.entry.image ?? ""),
                 fit: BoxFit.cover,
                 width: 50,
                 height: 50,
               ),
             ),
           ),
- //title,descript,date----------------------------------------         
+          // Title, Description, Date
           Flexible(
             fit: FlexFit.tight,
             child: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,9 +62,10 @@ class _ToDoItemState extends State<ToDoEntry> {
                   Text(
                     widget.entry.title,
                     style: const TextStyle(
-                        fontSize: 18,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 18,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     widget.entry.description,
@@ -80,6 +81,8 @@ class _ToDoItemState extends State<ToDoEntry> {
                 ],
               ),
             ),
+          ),
+          // Action Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -113,10 +116,11 @@ class _ToDoItemState extends State<ToDoEntry> {
                 ),
               ),
               IconButton(
-                  onPressed: () {
-                    context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
-                  },
-                  icon: const Icon(AppIcons.editIcon)),
+                onPressed: () {
+                  context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
+                },
+                icon: const Icon(AppIcons.editIcon),
+              ),
             ],
           ),
         ],

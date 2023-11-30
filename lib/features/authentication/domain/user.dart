@@ -48,7 +48,7 @@ class User {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //String imagePath = prefs.getString('imagePath') ?? '';
     String imagePath = prefs.getString('imagePath$userId') ?? '';
-    print('is path empty? ${imagePath}');
+    print('is path empty? $imagePath');
     if (imagePath.isNotEmpty) {
       setPicture = imagePath;
     }

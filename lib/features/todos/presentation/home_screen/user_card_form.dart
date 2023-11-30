@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
 
 class UserCardForm extends ConsumerStatefulWidget {
@@ -16,33 +15,34 @@ class UserCardForm extends ConsumerStatefulWidget {
 }
 
 class _UserCardFormState extends ConsumerState<UserCardForm> {
+  final ImagePicker imagePicker = ImagePicker();
+  final TextEditingController nameController = TextEditingController();
+  String? selectedPicture;
+
+  void startImagePicker() async {
+    final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      selectedPicture = image.path;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('imagePath${FirebaseAuthService().getUser()}', image.path);
+    }
+  }
+
+  void submitData() {
+    var user = ref.watch(userProvider.notifier);
+
+    if (nameController.text.isNotEmpty && selectedPicture != null) {
+      user.updateAll(nameController.text, selectedPicture!);
+    } else if (selectedPicture == null) {
+      user.updateName(nameController.text);
+    } else if (nameController.text.isEmpty) {
+      user.updateImg(selectedPicture!);
+    }
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var user = ref.watch(userProvider.notifier);
-    var userId = FirebaseAuthService().getUser() ?? '';
-    final ImagePicker _imagePicker = ImagePicker();
-    final nameController = TextEditingController();
-    String? _selectedPicture;
-
-  _startImagePicker() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      _selectedPicture = image.path;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('imagePath$userId', image.path);
-    }
-
-    void _submitData() {
-      if (nameController.text.isNotEmpty && _selectedPicture != null) {
-        user.updateAll(nameController.text, _selectedPicture!);
-      } else if (_selectedPicture == null) {
-        user.updateName(nameController.text);
-      } else if (nameController.text.isEmpty) {
-        user.updateImg(_selectedPicture!);
-      }
-      Navigator.of(context).pop();
-    }
-
     return Card(
       elevation: 5,
       child: Container(
@@ -52,7 +52,7 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
             TextField(
               decoration: const InputDecoration(labelText: 'User Name'),
               controller: nameController,
-              onSubmitted: (_) => _submitData,
+              onSubmitted: (_) => submitData(),
             ),
             SizedBox(
               height: 70,
@@ -60,21 +60,21 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
                 children: [
                   Expanded(
                     child: Text(
-                      _selectedPicture == null ? 'No picture selected' : 'Selected Picture',
+                      selectedPicture == null ? 'No picture selected' : 'Selected Picture',
                     ),
                   ),
-                  _selectedPicture == null
-                      ? SizedBox(
+                  selectedPicture == null
+                      ? const SizedBox(
                           width: 10,
                         )
-                      : Icon(
+                      : const Icon(
                           AppIcons.addPhoto,
                         ),
                   TextButton(
-                    style: const ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll(AppColors.blue),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(AppColors.blue),
                     ),
-                    onPressed: _startImagePicker,
+                    onPressed: startImagePicker,
                     child: const Text(
                       'Choose Picture',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -86,8 +86,7 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
             Container(
               padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
-                style: const ButtonStyle(),
-                onPressed: _submitData,
+                onPressed: submitData,
                 child: const Text('Save'),
               ),
             ),
