@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
+import 'package:youdoyou/features/authentication/domain/user.dart';
 
 class UserCardForm extends ConsumerStatefulWidget {
   const UserCardForm({super.key});
@@ -15,28 +15,48 @@ class UserCardForm extends ConsumerStatefulWidget {
 }
 
 class _UserCardFormState extends ConsumerState<UserCardForm> {
+  final authManager = FirebaseAuthService();
   final ImagePicker imagePicker = ImagePicker();
   final TextEditingController nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   String? selectedPicture;
 
   void startImagePicker() async {
-    final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      selectedPicture = image.path;
+      setState(() {
+        selectedPicture = image.path;
+      });
+      // selectedPicture = image.path;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('imagePath${FirebaseAuthService().getUser()}', image.path);
+      await prefs.setString(
+          'imagePath${FirebaseAuthService().getUser()}', image.path);
     }
   }
 
-  void submitData() {
+  void updateEmailAndPassword()  {
+    if (emailController.text.isNotEmpty || passwordController.text.isNotEmpty) {
+       authManager.upDateMailAndPassword(
+          emailController.text, passwordController.text);
+    }
+
+    Navigator.of(context).pop();
+  }
+
+  void submitData() async {
     var user = ref.watch(userProvider.notifier);
 
     if (nameController.text.isNotEmpty && selectedPicture != null) {
-      user.updateAll(nameController.text, selectedPicture!);
+      user.updateAll(newName: nameController.text, newImg: selectedPicture!);
+      //updateEmailAndPassword();
     } else if (selectedPicture == null) {
       user.updateName(nameController.text);
+      //updateEmailAndPassword();
     } else if (nameController.text.isEmpty) {
       user.updateImg(selectedPicture!);
+      //updateEmailAndPassword();
     }
     Navigator.of(context).pop();
   }
@@ -52,7 +72,6 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
             TextField(
               decoration: const InputDecoration(labelText: 'User Name'),
               controller: nameController,
-              onSubmitted: (_) => submitData(),
             ),
             SizedBox(
               height: 70,
@@ -60,7 +79,9 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
                 children: [
                   Expanded(
                     child: Text(
-                      selectedPicture == null ? 'No picture selected' : 'Selected Picture',
+                      selectedPicture == null
+                          ? 'No picture selected'
+                          : 'Selected Picture',
                     ),
                   ),
                   selectedPicture == null
@@ -72,7 +93,8 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
                         ),
                   TextButton(
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(AppColors.blue),
+                      foregroundColor:
+                          MaterialStateProperty.all(AppColors.blue),
                     ),
                     onPressed: startImagePicker,
                     child: const Text(
@@ -83,11 +105,41 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
                 ],
               ),
             ),
-            Container(
+                        Container(
               padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 onPressed: submitData,
                 child: const Text('Save'),
+              ),
+            ),
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(labelText: 'Update Email'),
+                      controller: emailController,
+                      //onSubmitted: (_) => updateEmailAndPassword(),
+                    ),
+                  ),
+                  ElevatedButton(onPressed: updateEmailAndPassword, child: Text('Update'))
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(labelText: 'Update Password'),
+                      controller: passwordController,
+                      //onSubmitted: (_) => updateEmailAndPassword(),
+                    ),
+                  ),
+                  ElevatedButton(onPressed: updateEmailAndPassword, child: Text('Update'))
+                ],
               ),
             ),
           ],

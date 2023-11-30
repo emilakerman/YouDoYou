@@ -25,6 +25,19 @@ class FirebaseAuthService {
       }
     }
   }
+    Future<void> upDateMailAndPassword(String newEmail, String newPassword) async {
+      //print('$newEmail');
+    try {
+      if(newEmail.isNotEmpty) await _auth.currentUser?.updateEmail(newEmail);
+      if(newPassword.isNotEmpty) await _auth.currentUser?.updatePassword(newPassword);
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'user-notfound') {
+
+      } else if (error.code == 'wrong-password') {
+        
+      }
+    }
+  }
 
   Future<void> signOut() async => await _auth.signOut();
 
