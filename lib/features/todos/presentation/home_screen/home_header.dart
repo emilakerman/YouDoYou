@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/user_card_form.dart';
 
@@ -42,12 +43,12 @@ class _HomeHeaderState extends State<HomeHeader> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 15, right: 10),
+              margin: const EdgeInsets.only(top: Sizes.p16, right: Sizes.p12),
               height: 90,
               width: 130,
               child: user.profilePicture != ''
                   ? ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(Sizes.p12),
                       child: Image.file(
                         File(user.profilePicture!),
                         fit: BoxFit.cover,
@@ -55,51 +56,47 @@ class _HomeHeaderState extends State<HomeHeader> {
                     )
                   : const Icon(
                       AppIcons.profileIcon,
-                      color: Colors.grey,
+                      color: AppColors.grey,
                     ),
             ),
             Card(
               color: AppColors.extra,
-              margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
-              elevation: 10,
+              margin: const EdgeInsets.only(top: Sizes.p16, left: Sizes.p4, right: Sizes.p4),
               child: SizedBox(
-                height: 100,
+                height: 90,
                 width: 220,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(left: 50),
-                            child: Text(
-                              'My ToDos',
+                      child: Padding(
+                        padding: const EdgeInsets.all(Sizes.p8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Profile',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Text(
-                              user.name == '' ? 'User: ' : 'User:      ${user.name}',
+                            Text(
+                              user.name == '' ? 'User:' : '${user.name}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     IconButton(
-                      padding: const EdgeInsets.only(top: 50),
+                      padding: const EdgeInsets.only(top: Sizes.p48),
                       onPressed: () {
                         _startEditUserCard(context);
                       },

@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 
 class User {
@@ -9,21 +7,17 @@ class User {
   String? profilePicture;
   final userId = FirebaseAuthService().getUser() ?? '';
 
-  User({
-    required this.name, required this.profilePicture
-    });
+  User({required this.name, required this.profilePicture});
 
-  User setState(){
+  User setState() {
     getPicture;
-    return User(
-      name: name, 
-      profilePicture: profilePicture
-      );
+    return User(name: name, profilePicture: profilePicture);
   }
 
-    set setName(String name) {
+  set setName(String name) {
     this.name = name;
   }
+
   Future<String> getName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var prefName = prefs.getString('userName$userId') ?? '';
@@ -65,25 +59,24 @@ class User {
   }
 }
 
-class UserNotifier extends StateNotifier<User>{
-
-  UserNotifier() : super(
-    User(name: '', profilePicture: '')
-  ){
+class UserNotifier extends StateNotifier<User> {
+  UserNotifier() : super(User(name: '', profilePicture: '')) {
     updatefromPref();
   }
 
-  void updatefromPref(){
+  void updatefromPref() {
     state = state.setState();
   }
-  void updateName(String newName){
+
+  void updateName(String newName) {
     state = state.copyWith(name: newName);
   }
-  void updateImg(String newImg){
+
+  void updateImg(String newImg) {
     state = state.copyWith(profilePicture: newImg);
   }
-  void updateAll(String newName, String newImg){
+
+  void updateAll(String newName, String newImg) {
     state = state.copyWith(name: newName, profilePicture: newImg);
   }
 }
-
