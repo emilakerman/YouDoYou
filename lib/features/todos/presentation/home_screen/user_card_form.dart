@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 
@@ -20,8 +21,7 @@ class _UserCardFormState extends State<UserCardForm> {
   String? _selectedPicture;
 
   _startImagePicker() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       // setState(() {
       //   user.setProfilePicture = image.path;
@@ -58,7 +58,7 @@ class _UserCardFormState extends State<UserCardForm> {
               controller: _titleController,
               onSubmitted: (_) => _submitData(),
             ),
-            Container(
+            SizedBox(
               height: 70,
               child: Row(
                 children: [
@@ -67,16 +67,13 @@ class _UserCardFormState extends State<UserCardForm> {
                   //wrap the Text in a Expanded to create space between Text and Button
                   Expanded(
                     child: Text(
-                      _selectedPicture == null
-                          ? 'No picture selected'
-                          : 'Selected Picture',
+                      _selectedPicture == null ? 'No picture selected' : 'Selected Picture',
                     ),
                   ),
                   //Text('No Date Chosen'),
                   TextButton(
                     style: const ButtonStyle(
-                      //foregroundColor = color of the letters
-                      foregroundColor: MaterialStatePropertyAll(Colors.blue),
+                      foregroundColor: MaterialStatePropertyAll(AppColors.blue),
                     ),
                     onPressed: _startImagePicker,
                     child: const Text(
@@ -91,10 +88,7 @@ class _UserCardFormState extends State<UserCardForm> {
             Container(
               padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
-                style: const ButtonStyle(
-                    // foregroundColor: MaterialStatePropertyAll(Colors.white),
-                    // backgroundColor: MaterialStatePropertyAll(Colors.blue),
-                    ),
+                style: const ButtonStyle(),
                 onPressed: _submitData,
                 child: const Text('Save'),
               ),

@@ -7,7 +7,7 @@ pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
   final file = await imagePicker.pickImage(source: source);
   if (file != null) {
-    return await File(file.path);
+    return File(file.path);
   }
   if (kDebugMode) {
     print("No image selected");

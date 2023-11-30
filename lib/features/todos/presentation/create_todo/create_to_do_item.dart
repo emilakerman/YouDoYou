@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
       scrollable: true,
       title: const Text(
         "Create Todo",
-        style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        style: TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold),
       ),
       content: SizedBox(
         width: width,

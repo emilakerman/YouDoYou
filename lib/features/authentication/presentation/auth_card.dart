@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:youdoyou/constants/app_colors.dart';
+import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 
-enum AuthMode { Signup, Login }
+enum AuthMode { signup, login }
 
 class AuthCard extends StatefulWidget {
   const AuthCard({super.key});
 
   @override
-  _AuthCardState createState() => _AuthCardState();
+  AuthCardState createState() => AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class AuthCardState extends State<AuthCard> {
   @override
   void initState() {
     super.initState();
-    //check if user is loged in or out
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  AuthMode authMode = AuthMode.Login;
+  AuthMode authMode = AuthMode.login;
 
   final Map<String, String> _authData = {
     'email': '',
@@ -43,7 +43,7 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (authMode == AuthMode.Login) {
+    if (authMode == AuthMode.login) {
       // Log user in AND GO TO HOME
       const Duration(seconds: 1);
       await FirebaseAuthService()
@@ -52,8 +52,8 @@ class _AuthCardState extends State<AuthCard> {
       //this returns a future/promise... the whole function should be async?
       // check if user already exists or no, Sign user up and go home
       const Duration(seconds: 1);
-      await FirebaseAuthService().signUp(
-          _authData['email'] as String, _authData['password'] as String);
+      await FirebaseAuthService()
+          .signUp(_authData['email'] as String, _authData['password'] as String);
     }
     setState(() {
       _isLoading = false;
@@ -61,13 +61,13 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   void _switchAuthMode() {
-    if (authMode == AuthMode.Login) {
+    if (authMode == AuthMode.login) {
       setState(() {
-        authMode = AuthMode.Signup;
+        authMode = AuthMode.signup;
       });
     } else {
       setState(() {
-        authMode = AuthMode.Login;
+        authMode = AuthMode.login;
       });
     }
   }
@@ -82,9 +82,8 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: authMode == AuthMode.Signup ? 340 : 280,
-        constraints:
-            BoxConstraints(minHeight: authMode == AuthMode.Signup ? 340 : 280),
+        height: authMode == AuthMode.signup ? 340 : 280,
+        constraints: BoxConstraints(minHeight: authMode == AuthMode.signup ? 340 : 280),
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(10.0),
         child: Form(
@@ -97,7 +96,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(
                     labelText: 'E-Mail',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: AppColors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -108,9 +107,7 @@ class _AuthCardState extends State<AuthCard> {
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@')) {
+                    if (value == null || value.isEmpty || !value.contains('@')) {
                       return 'Invalid email!';
                     }
                     return null;
@@ -120,7 +117,7 @@ class _AuthCardState extends State<AuthCard> {
                     //emailController.text = '';
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 //PASSWORD TEXTFIELD
@@ -128,7 +125,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: AppColors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -142,35 +139,36 @@ class _AuthCardState extends State<AuthCard> {
                     if (value == null || value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return null;
                   },
                   onSaved: (value) {
                     if (value != null) _authData['password'] = value;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                if (authMode == AuthMode.Signup)
+                if (authMode == AuthMode.signup)
                   TextFormField(
-                    enabled: authMode == AuthMode.Signup,
+                    enabled: authMode == AuthMode.signup,
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppColors.white),
+                        borderRadius: BorderRadius.circular(Sizes.p12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: AppColors.secondary),
-                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppColors.secondary),
+                        borderRadius: BorderRadius.circular(Sizes.p12),
                       ),
                     ),
                     obscureText: true,
-                    validator: authMode == AuthMode.Signup
+                    validator: authMode == AuthMode.signup
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return null;
                           }
                         : null,
                   ),
@@ -179,7 +177,7 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 // BUTTONS---------------------------------------
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -187,25 +185,22 @@ class _AuthCardState extends State<AuthCard> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       backgroundColor: AppColors.complement,
-                      foregroundColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: Sizes.p8),
                     ),
                     onPressed: _submit,
-                    child:
-                        Text(authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                    child: Text(authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
                   ),
                 //switch between sign in/ up---------------------------
                 TextButton(
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.additional,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 4.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: Sizes.p4),
                   ),
                   onPressed: _switchAuthMode,
                   child: Text(
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      '${authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      '${authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                 ),
               ],
             ),

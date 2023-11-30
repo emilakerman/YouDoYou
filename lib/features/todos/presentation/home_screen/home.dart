@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TEMPORARY LOG OUT
-    Future<void> _logOut() async {
+    Future<void> logOut() async {
       await FirebaseAuthService().signOut();
     }
 
@@ -28,14 +28,15 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+            style:
+                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold),
           ),
           actions: [
             IconButton(
-              onPressed: _logOut,
+              onPressed: logOut,
               icon: const Icon(
                 AppIcons.logOutIcon,
-                color: Colors.white,
+                color: AppColors.white,
                 size: 30,
               ),
             ),

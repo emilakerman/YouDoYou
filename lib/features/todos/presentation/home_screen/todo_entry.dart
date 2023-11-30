@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
-import 'package:youdoyou/routing/routes.dart';
-
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
@@ -54,47 +52,45 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
             ],
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Consumer(
-                  builder: (_, ref, __) {
-                    return IconButton(
-                      onPressed: () => handleCheck(ref: ref),
-                      icon: widget.entry.isDone == false
-                          ? const Icon(
-                              AppIcons.notCheckIcon,
-                              color: Colors.grey,
-                              size: 35,
-                            )
-                          : const Icon(
-                              AppIcons.checkIcon,
-                              color: Colors.green,
-                              size: 35,
-                            ),
-                    );
-                  },
-                ),
-                Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => ref
-                        .read(firestoreRepositoryProvider)
-                        .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
-                    icon: const Icon(
-                      AppIcons.deleteIcon,
-                      color: Colors.red,
-                      size: 35,
-                    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Consumer(
+                builder: (_, ref, __) {
+                  return IconButton(
+                    onPressed: () => handleCheck(ref: ref),
+                    icon: widget.entry.isDone == false
+                        ? const Icon(
+                            AppIcons.notCheckIcon,
+                            color: AppColors.grey,
+                            size: 35,
+                          )
+                        : const Icon(
+                            AppIcons.checkIcon,
+                            color: AppColors.green,
+                            size: 35,
+                          ),
+                  );
+                },
+              ),
+              Consumer(
+                builder: (_, ref, __) => IconButton(
+                  onPressed: () => ref
+                      .read(firestoreRepositoryProvider)
+                      .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
+                  icon: const Icon(
+                    AppIcons.deleteIcon,
+                    color: AppColors.red,
+                    size: 35,
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
-                    },
-                    icon: const Icon(Icons.edit)),
-              ],
-            ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
+                  },
+                  icon: const Icon(Icons.edit)),
+            ],
           ),
         ],
       ),

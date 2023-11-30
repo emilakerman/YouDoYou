@@ -1,26 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
-import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final TodoModel? entry;
   final String? id;
 
-  const DetailScreen({Key? key, this.id, this.entry}) : super(key: key);
+  const DetailScreen({super.key, this.id, this.entry});
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  DetailScreenState createState() => DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class DetailScreenState extends State<DetailScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   bool _isEditMode = false;
@@ -87,17 +84,15 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.entry?.title ?? "Title",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold)),
-        iconTheme: IconThemeData(color: Colors.white),
+            style:
+                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+        iconTheme: const IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
             onPressed: _toggleEditMode,
             icon: const Icon(
               AppIcons.editIcon,
-              color: Colors.white,
+              color: AppColors.white,
               size: 30,
             ),
           ),
@@ -118,18 +113,13 @@ class _DetailScreenState extends State<DetailScreen> {
             _isEditMode
                 ? TextField(controller: _titleController)
                 : Text(widget.entry?.title ?? "",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
-
+                    style: const TextStyle(
+                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextField(controller: _descriptionController)
                 : Text(widget.entry?.description ?? "",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
+                    style: const TextStyle(
+                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
             _isEditMode
                 ? TextFormField(
                     readOnly: true,
@@ -145,7 +135,6 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   )
                 : Text(widget.entry?.endDate ?? ""),
-
             Consumer(
               builder: (context, ref, child) => Row(
                 children: [
@@ -160,7 +149,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       : const SizedBox.shrink()
                 ],
               ),
-
             ),
           ],
         ),
