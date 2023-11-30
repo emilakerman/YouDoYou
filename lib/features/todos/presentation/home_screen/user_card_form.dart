@@ -6,6 +6,7 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
+import 'package:youdoyou/utils/locally_stored_data.dart';
 
 class UserCardForm extends ConsumerStatefulWidget {
   const UserCardForm({super.key});
@@ -29,15 +30,19 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
   }
 
   void submitData() {
-    var user = ref.watch(userProvider.notifier);
+    LocallyStoredData localStorage = LocallyStoredData();
+    localStorage.saveName(name: nameController.text);
+    localStorage.saveImage(image: selectedPicture!);
 
-    if (nameController.text.isNotEmpty && selectedPicture != null) {
-      user.updateAll(nameController.text, selectedPicture!);
-    } else if (selectedPicture == null) {
-      user.updateName(nameController.text);
-    } else if (nameController.text.isEmpty) {
-      user.updateImg(selectedPicture!);
-    }
+    // var user = ref.watch(userProvider.notifier);
+
+    // if (nameController.text.isNotEmpty && selectedPicture != null) {
+    //   user.updateAll(nameController.text, selectedPicture!);
+    // } else if (selectedPicture == null) {
+    //   user.updateName(nameController.text);
+    // } else if (nameController.text.isEmpty) {
+    //   user.updateImg(selectedPicture!);
+    // }
     Navigator.of(context).pop();
   }
 

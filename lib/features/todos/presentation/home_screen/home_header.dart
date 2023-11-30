@@ -6,6 +6,7 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/user_card_form.dart';
+import 'package:youdoyou/utils/locally_stored_data.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -19,9 +20,22 @@ final userProvider = StateNotifierProvider<UserNotifier, User>(
 );
 
 class _HomeHeaderState extends State<HomeHeader> {
+  String newName = "";
+  String profilePic = "";
   @override
   void initState() {
+    fetchData();
     super.initState();
+  }
+
+  void fetchData() async {
+    LocallyStoredData data = LocallyStoredData();
+    String userName = await data.readName();
+    String image = await data.readImage();
+    setState(() {
+      newName = userName;
+      profilePic = image;
+    });
   }
 
   void _startEditUserCard(BuildContext context) {
@@ -37,7 +51,6 @@ class _HomeHeaderState extends State<HomeHeader> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (_, ref, __) {
-        final user = ref.watch(userProvider);
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,11 +59,11 @@ class _HomeHeaderState extends State<HomeHeader> {
               margin: const EdgeInsets.only(top: Sizes.p16, right: Sizes.p12),
               height: 90,
               width: 130,
-              child: user.profilePicture != ''
+              child: profilePic != ''
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(Sizes.p12),
                       child: Image.file(
-                        File(user.profilePicture!),
+                        File(profilePic),
                         fit: BoxFit.cover,
                       ),
                     )
@@ -84,7 +97,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                               ),
                             ),
                             Text(
-                              user.name == '' ? 'User:' : '${user.name}',
+                              newName,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
