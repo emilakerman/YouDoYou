@@ -146,6 +146,9 @@ class DetailScreenState extends State<DetailScreen> {
                       icon: const Icon(Icons.edit)),
                   _isEditMode
                       ? TextButton(onPressed: () => {update(ref)}, child: const Text("save"))
+                      : const SizedBox.shrink(),
+                  widget.entry?.email != ""
+                      ? Text("Author: ${widget.entry?.author}")
                       : const SizedBox.shrink()
                 ],
               ),

@@ -10,10 +10,12 @@ import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart
 class TodoList extends ConsumerStatefulWidget {
   final String title;
   final bool isDone;
+  final bool isShared;
   const TodoList({
     super.key,
     required this.title,
     required this.isDone,
+    required this.isShared,
   });
 
   @override
@@ -42,6 +44,12 @@ class TodoListState extends ConsumerState<TodoList> {
         .where('isDone', isEqualTo: true)
         .snapshots();
 
+    //make new stream that listens to a shared collection where email = current user email
+    final Stream<QuerySnapshot> sharedStream = FirebaseFirestore.instance
+        .collection('Shared')
+        .where('email', isEqualTo: ref.watch(authEmailProvider))
+        .snapshots();
+
     return Card(
       color: AppColors.complement,
       margin: const EdgeInsets.all(Sizes.p12),
@@ -57,13 +65,18 @@ class TodoListState extends ConsumerState<TodoList> {
                 border: Border.all(color: AppColors.primary, width: 2, style: BorderStyle.solid),
                 borderRadius: const BorderRadius.all(Radius.circular(Sizes.p12)),
               ),
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: Sizes.p20,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: AppColors.white,
+                      fontSize: Sizes.p20,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -110,7 +123,11 @@ class TodoListState extends ConsumerState<TodoList> {
                     },
                   );
                 },
-                stream: widget.isDone ? todoStreamIsDone : todoStream,
+                stream: widget.isShared
+                    ? sharedStream
+                    : widget.isDone
+                        ? todoStreamIsDone
+                        : todoStream,
               ),
             ),
           ],

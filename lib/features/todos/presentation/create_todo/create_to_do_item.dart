@@ -22,6 +22,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   DateTime? _selectedDate;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _sharedEmailController = TextEditingController();
 
   @override
   void dispose() {
@@ -72,7 +73,10 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
         .read(createToDoItemControllerProvider.notifier)
         .changeDescription(_descriptionController.text.characters.toString());
     ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
-    ref.read(createToDoItemControllerProvider.notifier).changeAuthor(ref.watch(authStateProvider));
+    ref.read(createToDoItemControllerProvider.notifier).changeAuthor(ref.watch(authEmailProvider));
+    ref
+        .read(createToDoItemControllerProvider.notifier)
+        .changeEmail(_sharedEmailController.text.characters.toString());
     ref.watch(createToDoItemControllerProvider);
   }
 
@@ -106,8 +110,8 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
               controller: _titleController,
             ),
             TextFormField(
-              decoration:
-                  const InputDecoration(icon: Icon(Icons.description), labelText: 'Description'),
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.description), labelText: 'Additional information'),
               controller: _descriptionController,
             ),
             TextFormField(
@@ -123,6 +127,15 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
                     : '',
               ),
             ),
+            Consumer(builder: (_, ref, __) {
+              return ref.watch(toggleSharedProvider)
+                  ? TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.share), labelText: 'Receiver Email'),
+                      controller: _sharedEmailController,
+                    )
+                  : const SizedBox.shrink();
+            }),
             Row(
               children: [
                 IconButton(
@@ -130,7 +143,13 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
                     icon: const Icon(Icons.add_a_photo)),
                 IconButton(
                     onPressed: () => _selectImage(ImageSource.gallery),
-                    icon: const Icon(Icons.image))
+                    icon: const Icon(Icons.image)),
+                Consumer(
+                  builder: (_, ref, __) => Switch(
+                    value: ref.watch(toggleSharedProvider),
+                    onChanged: (value) => ref.read(toggleSharedProvider.notifier).state = value,
+                  ),
+                ),
               ],
             ),
             _image != null
