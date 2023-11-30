@@ -76,7 +76,7 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
     ref.read(createToDoItemControllerProvider.notifier).changeAuthor(ref.watch(authEmailProvider));
     ref
         .read(createToDoItemControllerProvider.notifier)
-        .changeEmail(_sharedEmailController.text.characters.toString());
+        .changeEmail(_sharedEmailController.text.characters.toString().toLowerCase());
     ref.watch(createToDoItemControllerProvider);
   }
 
