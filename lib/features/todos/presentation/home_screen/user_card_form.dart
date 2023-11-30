@@ -33,6 +33,8 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
     LocallyStoredData localStorage = LocallyStoredData();
     localStorage.saveName(name: nameController.text);
     localStorage.saveImage(image: selectedPicture!);
+    ref.read(userNameProvider.notifier).state = nameController.text;
+    ref.read(profilePicProvider.notifier).state = selectedPicture!;
 
     // var user = ref.watch(userProvider.notifier);
 
