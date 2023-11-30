@@ -6,6 +6,8 @@ import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
+import 'package:youdoyou/routing/routes.dart';
 
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
@@ -19,6 +21,7 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
+    
     Future<void> handleCheck({required WidgetRef ref}) async {
       await ref.read(firestoreRepositoryProvider).updateItem(
           uid: ref.watch(authStateProvider),
@@ -26,32 +29,55 @@ class _ToDoItemState extends State<ToDoEntry> {
           entryProperty: !widget.entry.isDone);
     }
 
-    return SizedBox(
-      height: 60,
+    return Container(
+      height: 80,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image(
-            image: NetworkImage(
-              widget.entry.image ?? "",
+  //image--------------------------------------------------
+          Container(
+            padding: EdgeInsets.only(left:4),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image(
+                image: NetworkImage(
+                  widget.entry.image ?? "",
+                ),
+                fit: BoxFit.cover,
+                width: 50,
+                height: 50,
+              ),
             ),
-            width: 30,
-            height: 30,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.entry.description,
-                style: const TextStyle(overflow: TextOverflow.ellipsis),
+ //title,descript,date----------------------------------------         
+          Flexible(
+            fit: FlexFit.tight,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.entry.title,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    widget.entry.description,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(
+                    "${widget.entry.creationDate}",
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ],
               ),
-              Text(
-                "${widget.entry.creationDate}",
-                style: const TextStyle(fontSize: 15),
-              ),
-            ],
-          ),
+            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -63,12 +89,12 @@ class _ToDoItemState extends State<ToDoEntry> {
                         ? const Icon(
                             AppIcons.notCheckIcon,
                             color: AppColors.grey,
-                            size: 35,
+                            size: 30,
                           )
                         : const Icon(
                             AppIcons.checkIcon,
                             color: AppColors.green,
-                            size: 35,
+                            size: 30,
                           ),
                   );
                 },
@@ -81,7 +107,7 @@ class _ToDoItemState extends State<ToDoEntry> {
                   icon: const Icon(
                     AppIcons.deleteIcon,
                     color: AppColors.red,
-                    size: 35,
+                    size: 30,
                   ),
                 ),
               ),
@@ -89,7 +115,7 @@ class _ToDoItemState extends State<ToDoEntry> {
                   onPressed: () {
                     context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
                   },
-                  icon: const Icon(Icons.edit)),
+                  icon: const Icon(AppIcons.editIcon)),
             ],
           ),
         ],

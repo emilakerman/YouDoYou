@@ -1,4 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 
 class User {
@@ -6,43 +9,81 @@ class User {
   String? profilePicture;
   final userId = FirebaseAuthService().getUser() ?? '';
 
-  User._privateConstructor();
-  static final User _instance = User._privateConstructor();
-  static User get instance => _instance;
+  User({
+    required this.name, required this.profilePicture
+    });
 
-  String get getName {
-    if (name == null) {
-      return '';
-    } else {
-      return name!;
-    }
+  User setState(){
+    getPicture;
+    return User(
+      name: name, 
+      profilePicture: profilePicture
+      );
   }
 
-  // getTheName() async {
-  //   final String image = '';
-  //   if (name != null) {
-  //     setState(() {
-  //       setName = image;
-  //     });
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     prefs.setString('namePath', image);
-  //   }
-  // }
-
-  set setName(String name) {
+    set setName(String name) {
     this.name = name;
   }
+  Future<String> getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var prefName = prefs.getString('userName$userId') ?? '';
+    setName = prefName;
+    return prefName;
+  }
 
-  set setProfilePicture(String profilePicture) {
+  void saveName(String inputName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userName$userId', inputName);
+    setName = prefs.setString('userName$userId', inputName) as String;
+    //print('saveName() as : ${prefs.getString('userName$userId')}');
+  }
+
+  //---------PICTURE-----------------------------------------------------------
+
+  set setPicture(String profilePicture) {
     this.profilePicture = profilePicture;
   }
 
-  void get getProfilePicture async {
+  void getPicture() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //String imagePath = prefs.getString('imagePath') ?? '';
     String imagePath = prefs.getString('imagePath$userId') ?? '';
+    print('is path empty? ${imagePath}');
     if (imagePath.isNotEmpty) {
-      setProfilePicture = imagePath;
+      setPicture = imagePath;
     }
   }
+
+  User copyWith({
+    String? name,
+    String? profilePicture,
+  }) {
+    return User(
+      name: name ?? this.name,
+      profilePicture: profilePicture ?? this.profilePicture,
+    );
+  }
 }
+
+class UserNotifier extends StateNotifier<User>{
+
+  UserNotifier() : super(
+    User(name: '', profilePicture: '')
+  ){
+    updatefromPref();
+  }
+
+  void updatefromPref(){
+    state = state.setState();
+  }
+  void updateName(String newName){
+    state = state.copyWith(name: newName);
+  }
+  void updateImg(String newImg){
+    state = state.copyWith(profilePicture: newImg);
+  }
+  void updateAll(String newName, String newImg){
+    state = state.copyWith(name: newName, profilePicture: newImg);
+  }
+}
+

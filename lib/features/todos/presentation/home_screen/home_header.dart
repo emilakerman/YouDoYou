@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
@@ -15,110 +15,90 @@ class HomeHeader extends StatefulWidget {
   State<HomeHeader> createState() => _HomeHeaderState();
 }
 
+final userProvider = StateNotifierProvider<UserNotifier, User>(
+  (ref) => UserNotifier(),
+);
+
 class _HomeHeaderState extends State<HomeHeader> {
-  User user = User.instance;
-
-  final ImagePicker _imagePicker = ImagePicker();
-
   @override
   void initState() {
-    user.getProfilePicture;
-    user.getName;
     super.initState();
-  }
-
-  _getImage() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        user.setProfilePicture = image.path;
-      });
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('imagePath', image.path);
-    }
   }
 
   void _startEditUserCard(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return const UserCardForm();
+        return UserCardForm();
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.extra,
-      margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
-      elevation: 10,
-      child: SizedBox(
-        height: 100,
-        width: double.infinity,
+    return Consumer(builder: (_, ref, __) {
+      final user = ref.watch(userProvider);
+      return Container(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // container has a row that contains the picture and the info card
             Container(
+              margin: EdgeInsets.only(top: 15, right: 10),
               height: 90,
-              width: 150,
-              margin: const EdgeInsets.only(left: Sizes.p12, right: Sizes.p12),
-              decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  border: Border.all(color: AppColors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  //picture
-                  user.profilePicture != null
-                      ? Image.file(
-                          File(user.profilePicture!),
-                          height: 80,
-                          width: 80,
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(
-                          AppIcons.profileIcon,
-                          color: AppColors.grey,
-                          size: 80,
-                        ),
-                  //button img picker
-                  IconButton(
-                    padding: const EdgeInsets.only(top: 50),
-                    onPressed: _getImage,
-                    icon: const Icon(
-                      AppIcons.editIcon,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //info card
-            Container(
-              height: 90,
-              width: 200,
-              decoration: BoxDecoration(
-                  color: AppColors.additional,
-                  border: Border.all(color: AppColors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(Sizes.p20))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'User: ${user.name}',
-                        ),
+              width: 130,
+              child: user.profilePicture != ''
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.file(
+                        File(user.profilePicture!),
+                        fit: BoxFit.cover,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: const Text('My ToDos'),
+                    )
+                  : const Icon(
+                      AppIcons.profileIcon,
+                      color: Colors.grey,
+                    ),
+            ),
+            Card(
+              color: AppColors.extra,
+              margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
+              elevation: 10,
+              child: Container(
+                height: 100,
+                width: 220,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 50),
+                            child: Text(
+                              'My ToDos',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Text(
+                              user.name == ''
+                                  ? 'User: '
+                                  : 'User:      ${user.name}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
                       ),
                     ],
                   ),
@@ -131,13 +111,13 @@ class _HomeHeaderState extends State<HomeHeader> {
                       AppIcons.editIcon,
                       color: AppColors.black,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }
