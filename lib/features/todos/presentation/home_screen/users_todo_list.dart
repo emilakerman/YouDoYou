@@ -44,7 +44,7 @@ class TodoListState extends ConsumerState<TodoList> {
         .where('isDone', isEqualTo: true)
         .snapshots();
 
-    //make new stream that listens to a shared collection where email = current user email
+    // Stream that listens to a shared collection where email = current user email.
     final Stream<QuerySnapshot> sharedStream = FirebaseFirestore.instance
         .collection('Shared')
         .where('email', isEqualTo: ref.watch(authEmailProvider))

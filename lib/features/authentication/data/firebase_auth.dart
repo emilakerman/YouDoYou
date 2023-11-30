@@ -9,6 +9,7 @@ class FirebaseAuthService {
   final _auth = FirebaseAuth.instance;
 
   User? getUser() => _auth.currentUser;
+  String? getUserEmail() => _auth.currentUser?.email;
 
   Future<void> signUp(String email, String password) async {
     await _auth.createUserWithEmailAndPassword(email: email, password: password);
@@ -19,10 +20,7 @@ class FirebaseAuthService {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'user-notfound') {
-
-      } else if (error.code == 'wrong-password') {
-        
-      }
+      } else if (error.code == 'wrong-password') {}
     }
   }
 
