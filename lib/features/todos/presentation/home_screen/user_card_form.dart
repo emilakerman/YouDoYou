@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/authentication/domain/user.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
@@ -23,17 +24,12 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
     final nameController = TextEditingController();
     String? _selectedPicture;
 
-    _startImagePicker() async {
-      final XFile? image =
-          await _imagePicker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        //user.updateImg(image.path);
-       // setState(() {
-          _selectedPicture = image.path;
-        //});
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('imagePath$userId', image.path);
-      }
+  _startImagePicker() async {
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      _selectedPicture = image.path;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('imagePath$userId', image.path);
     }
 
     void _submitData() {
@@ -58,15 +54,13 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
               controller: nameController,
               onSubmitted: (_) => _submitData,
             ),
-            Container(
+            SizedBox(
               height: 70,
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
-                      _selectedPicture == null
-                          ? 'No picture selected'
-                          : 'Selected Picture',
+                      _selectedPicture == null ? 'No picture selected' : 'Selected Picture',
                     ),
                   ),
                   _selectedPicture == null
@@ -78,7 +72,7 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
                         ),
                   TextButton(
                     style: const ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll(Colors.blue),
+                      foregroundColor: MaterialStatePropertyAll(AppColors.blue),
                     ),
                     onPressed: _startImagePicker,
                     child: const Text(

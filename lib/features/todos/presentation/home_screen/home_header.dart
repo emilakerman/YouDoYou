@@ -58,7 +58,6 @@ class _HomeHeaderState extends State<HomeHeader> {
                   : const Icon(
                       AppIcons.profileIcon,
                       color: Colors.grey,
-                      size: 100,
                     ),
             ),
             Card(
@@ -100,18 +99,17 @@ class _HomeHeaderState extends State<HomeHeader> {
                               ),
                             ),
                           ),
-                        ],
                       ),
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.only(top: 50),
-                      onPressed: () {
-                        _startEditUserCard(context);
-                      },
-                      icon: const Icon(
-                        AppIcons.editIcon,
-                        color: Colors.black,
-                      ),
+                    ],
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(top: 50),
+                    onPressed: () {
+                      _startEditUserCard(context);
+                    },
+                    icon: const Icon(
+                      AppIcons.editIcon,
+                      color: AppColors.black,
                     ),
                   ],
                 ),

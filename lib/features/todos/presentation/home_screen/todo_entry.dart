@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/data/firestore_data_service.dart';
+import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/routing/routes.dart';
@@ -30,13 +31,10 @@ class _ToDoItemState extends State<ToDoEntry> {
 
     return Container(
       height: 80,
-      //width: double.infinity,
       child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
   //image--------------------------------------------------
           Container(
-            //alignment: Alignment.topCenter,
             padding: EdgeInsets.only(left:4),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -80,66 +78,48 @@ class _ToDoItemState extends State<ToDoEntry> {
                 ],
               ),
             ),
-          ),
-//Buttons----------------------------------------------
-          Container(
-            //alignment: Alignment(-1, -1),
-            //alignment: AlignmentDirectional.topEnd,
-            child: Row(
-              children: [
-                Consumer(
-                  builder: (_, ref, __) {
-                    return IconButton(
-                      onPressed: () => handleCheck(ref: ref),
-                      icon: widget.entry.isDone == false
-                          ? const Icon(
-                              AppIcons.notCheckIcon,
-                              color: Colors.grey,
-                              size: 30,
-                            )
-                          : const Icon(
-                              AppIcons.checkIcon,
-                              color: Colors.green,
-                              size: 30,
-                            ),
-                    );
-                  },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Consumer(
+                builder: (_, ref, __) {
+                  return IconButton(
+                    onPressed: () => handleCheck(ref: ref),
+                    icon: widget.entry.isDone == false
+                        ? const Icon(
+                            AppIcons.notCheckIcon,
+                            color: AppColors.grey,
+                            size: 30,
+                          )
+                        : const Icon(
+                            AppIcons.checkIcon,
+                            color: AppColors.green,
+                            size: 30,
+                          ),
+                  );
+                },
+              ),
+              Consumer(
+                builder: (_, ref, __) => IconButton(
+                  onPressed: () => ref
+                      .read(firestoreRepositoryProvider)
+                      .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
+                  icon: const Icon(
+                    AppIcons.deleteIcon,
+                    color: AppColors.red,
+                    size: 30,
+                  ),
                 ),
-                Consumer(
-                  builder: (_, ref, __) {
-                    return IconButton(
-                      onPressed: () => ref
-                          .read(firestoreRepositoryProvider)
-                          .deleteFromFirestore(
-                              uid: ref.watch(authStateProvider), id: widget.id),
-                      icon: const Icon(
-                        AppIcons.deleteIcon,
-                        color: Colors.red,
-                        size: 30,
-                      ),
-                    );
+              ),
+              IconButton(
+                  onPressed: () {
+                    context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
                   },
-                ),
-                IconButton(
-                    onPressed: () {
-                      context.go('/detail',
-                          extra: {'entry': widget.entry, 'id': widget.id});
-                    },
-                    icon: const Icon(AppIcons.editIcon)),
-              ],
-            ),
+                  icon: const Icon(AppIcons.editIcon)),
+            ],
           ),
         ],
       ),
     );
   }
 }
-
-//border style
-
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.black),
-            //   borderRadius: const BorderRadius.all(
-            //     Radius.circular(2),
-            //   ),
-            // ),
