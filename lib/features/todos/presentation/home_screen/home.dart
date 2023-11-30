@@ -28,8 +28,11 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style:
-                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: AppColors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             IconButton(
@@ -47,8 +50,22 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               HomeHeader(),
-              TodoList(title: "To Do List", isDone: false),
-              TodoList(title: "Completed Todos", isDone: true),
+              TodoList(
+                title: "To Do List",
+                isDone: false,
+                isShared: false,
+              ),
+              TodoList(
+                title: "Completed Todos",
+                isDone: true,
+                isShared: false,
+              ),
+              TodoList(
+                title: "Shared Todos",
+                isDone: false,
+                isShared: true,
+              ),
+
               //TODO(Any): Implement new collection in firestore with shared todos and add to this widget.
             ],
           ),

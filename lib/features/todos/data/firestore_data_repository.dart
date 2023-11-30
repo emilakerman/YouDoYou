@@ -25,18 +25,27 @@ class FirestoreRepository {
     }
 
     TodoModel userInputTodoModel = await ref.watch(createToDoItemControllerProvider);
-
-    DocumentReference userDocumentRef = _db.collection("Users").doc(uid);
-    CollectionReference todosCollectionRef = userDocumentRef.collection("Todos");
-    await todosCollectionRef.add(userInputTodoModel.toMap());
+    if (userInputTodoModel.email == "") {
+      DocumentReference userDocumentRef = _db.collection("Users").doc(uid);
+      CollectionReference todosCollectionRef = userDocumentRef.collection("Todos");
+      await todosCollectionRef.add(userInputTodoModel.toMap());
+    } else {
+      CollectionReference userDocumentRef = _db.collection("Shared");
+      await userDocumentRef.add(userInputTodoModel.toMap());
+    }
   }
 
   /// The function deletes a document with a specific ID from a Firestore collection.
   Future<void> deleteFromFirestore({
     required String id,
     required String uid,
+    required TodoModel entry,
   }) async {
-    await _db.collection('Users').doc(uid).collection('Todos').doc(id).delete();
+    if (entry.email == "") {
+      await _db.collection('Users').doc(uid).collection('Todos').doc(id).delete();
+    } else {
+      await _db.collection('Shared').doc(id).delete();
+    }
   }
 
   Future<void> editTodoInFirestore({
@@ -59,10 +68,17 @@ class FirestoreRepository {
     required String entryId,
     required bool entryProperty,
     required String uid,
+    required TodoModel entry,
   }) async {
-    await _db.collection('Users').doc(uid).collection('Todos').doc(entryId).update({
-      'isDone': entryProperty,
-    });
+    if (entry.email == "") {
+      await _db.collection('Users').doc(uid).collection('Todos').doc(entryId).update({
+        'isDone': entryProperty,
+      });
+    } else {
+      await _db.collection('Shared').doc(entryId).update({
+        'isDone': entryProperty,
+      });
+    }
   }
 }
 

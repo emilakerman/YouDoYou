@@ -10,6 +10,7 @@ class TodoModel {
   String? image;
   String author;
   bool isDone;
+  String? email;
 
   TodoModel({
     this.id,
@@ -20,6 +21,7 @@ class TodoModel {
     this.image,
     required this.author,
     required this.isDone,
+    this.email,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class TodoModel {
       'image': image,
       'author': author,
       'isDone': isDone,
+      'email': email,
     };
   }
 
@@ -43,5 +46,6 @@ class TodoModel {
         endDate = doc.data()!['endDate'],
         image = doc.data()!['image'],
         author = doc.data()!['author'],
-        isDone = doc.data()!['isDone'];
+        isDone = doc.data()!['isDone'],
+        email = doc.data()!['email'];
 }

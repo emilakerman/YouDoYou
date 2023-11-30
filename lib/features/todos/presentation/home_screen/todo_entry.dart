@@ -21,9 +21,11 @@ class _ToDoItemState extends State<ToDoEntry> {
   Widget build(BuildContext context) {
     Future<void> handleCheck({required WidgetRef ref}) async {
       await ref.read(firestoreRepositoryProvider).updateItem(
-          uid: ref.watch(authStateProvider),
-          entryId: widget.id,
-          entryProperty: !widget.entry.isDone);
+            uid: ref.watch(authStateProvider),
+            entryId: widget.id,
+            entryProperty: !widget.entry.isDone,
+            entry: widget.entry,
+          );
     }
 
     return SizedBox(
@@ -75,9 +77,8 @@ class _ToDoItemState extends State<ToDoEntry> {
               ),
               Consumer(
                 builder: (_, ref, __) => IconButton(
-                  onPressed: () => ref
-                      .read(firestoreRepositoryProvider)
-                      .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
+                  onPressed: () => ref.read(firestoreRepositoryProvider).deleteFromFirestore(
+                      uid: ref.watch(authStateProvider), id: widget.id, entry: widget.entry),
                   icon: const Icon(
                     AppIcons.deleteIcon,
                     color: AppColors.red,

@@ -14,9 +14,9 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     creationDate: DateFormat.yMMMd().format(DateTime.now()).toString(),
     endDate: '',
     author: '',
-    image:
-        'https://firebasestorage.googleapis.com/v0/b/youdoyou-aeae2.appspot.com/o/placeholder.png?alt=media&token=bb5050d3-d33c-4b13-b7a1-e94ecd566727',
+    image: 'https://i.imgur.com/DHLl4HG.jpeg',
     isDone: false,
+    email: '',
   );
 
   @override
@@ -45,13 +45,14 @@ class CreateToDoItemController extends _$CreateToDoItemController {
   }
 
   void changeImage(String imageUrl) {
-    state.image = imageUrl;
+    // state.image = imageUrl;
+    state.image = 'https://i.imgur.com/DHLl4HG.jpeg';
+  }
+
+  void changeEmail(String email) {
+    state.email = email;
   }
 }
 
-// This list contains the uncompleted TODOS.
-final listViewProvider = StateProvider<List<TodoModel>>((ref) => []);
-// This list contains **completed** TODOS.
-final completedListViewProvider = StateProvider<List<TodoModel>>((ref) => []);
-// This list contains TODOS shared with the users.
-final sharedWithMeListViewProvider = StateProvider<List<TodoModel>>((ref) => []);
+// Toggle isShared provider.
+final toggleSharedProvider = StateProvider<bool>((ref) => false);

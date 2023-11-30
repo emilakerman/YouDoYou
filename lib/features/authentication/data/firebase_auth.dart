@@ -33,3 +33,8 @@ class FirebaseAuthService {
 String authState(AuthStateRef ref) {
   return FirebaseAuthService().getUser()!.uid.toString();
 }
+
+@riverpod
+String authEmail(AuthStateRef ref) {
+  return FirebaseAuthService().getUser()!.email.toString();
+}
