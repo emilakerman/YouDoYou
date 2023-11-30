@@ -8,7 +8,6 @@ import 'package:youdoyou/features/todos/domain/todo_model.dart';
 import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
 import 'package:youdoyou/routing/routes.dart';
 
-
 class ToDoEntry extends StatefulWidget {
   final TodoModel entry;
   final String id;
@@ -21,6 +20,7 @@ class ToDoEntry extends StatefulWidget {
 class _ToDoItemState extends State<ToDoEntry> {
   @override
   Widget build(BuildContext context) {
+    
     Future<void> handleCheck({required WidgetRef ref}) async {
       await ref.read(firestoreRepositoryProvider).updateItem(
           uid: ref.watch(authStateProvider),
@@ -28,35 +28,64 @@ class _ToDoItemState extends State<ToDoEntry> {
           entryProperty: !widget.entry.isDone);
     }
 
-    return SizedBox(
-      height: 60,
+    return Container(
+      height: 80,
+      //width: double.infinity,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image(
-            image: NetworkImage(
-              widget.entry.image ?? "",
-            ),
-            width: 30,
-            height: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.entry.description,
-                style: const TextStyle(overflow: TextOverflow.ellipsis),
-              ),
-              Text(
-                "${widget.entry.creationDate}",
-                style: const TextStyle(fontSize: 15),
-              ),
-            ],
-          ),
+  //image--------------------------------------------------
           Container(
+            //alignment: Alignment.topCenter,
+            padding: EdgeInsets.only(left:4),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image(
+                image: NetworkImage(
+                  widget.entry.image ?? "",
+                ),
+                fit: BoxFit.cover,
+                width: 50,
+                height: 50,
+              ),
+            ),
+          ),
+ //title,descript,date----------------------------------------         
+          Flexible(
+            fit: FlexFit.tight,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.entry.title,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    widget.entry.description,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(
+                    "${widget.entry.creationDate}",
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ),
+//Buttons----------------------------------------------
+          Container(
+            //alignment: Alignment(-1, -1),
+            //alignment: AlignmentDirectional.topEnd,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Consumer(
                   builder: (_, ref, __) {
@@ -66,33 +95,37 @@ class _ToDoItemState extends State<ToDoEntry> {
                           ? const Icon(
                               AppIcons.notCheckIcon,
                               color: Colors.grey,
-                              size: 35,
+                              size: 30,
                             )
                           : const Icon(
                               AppIcons.checkIcon,
                               color: Colors.green,
-                              size: 35,
+                              size: 30,
                             ),
                     );
                   },
                 ),
                 Consumer(
-                  builder: (_, ref, __) => IconButton(
-                    onPressed: () => ref
-                        .read(firestoreRepositoryProvider)
-                        .deleteFromFirestore(uid: ref.watch(authStateProvider), id: widget.id),
-                    icon: const Icon(
-                      AppIcons.deleteIcon,
-                      color: Colors.red,
-                      size: 35,
-                    ),
-                  ),
+                  builder: (_, ref, __) {
+                    return IconButton(
+                      onPressed: () => ref
+                          .read(firestoreRepositoryProvider)
+                          .deleteFromFirestore(
+                              uid: ref.watch(authStateProvider), id: widget.id),
+                      icon: const Icon(
+                        AppIcons.deleteIcon,
+                        color: Colors.red,
+                        size: 30,
+                      ),
+                    );
+                  },
                 ),
                 IconButton(
                     onPressed: () {
-                      context.go('/detail', extra: {'entry': widget.entry, 'id': widget.id});
+                      context.go('/detail',
+                          extra: {'entry': widget.entry, 'id': widget.id});
                     },
-                    icon: const Icon(Icons.edit)),
+                    icon: const Icon(AppIcons.editIcon)),
               ],
             ),
           ),
@@ -101,3 +134,12 @@ class _ToDoItemState extends State<ToDoEntry> {
     );
   }
 }
+
+//border style
+
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: Colors.black),
+            //   borderRadius: const BorderRadius.all(
+            //     Radius.circular(2),
+            //   ),
+            // ),

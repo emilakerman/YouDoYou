@@ -17,7 +17,10 @@ class FirebaseAuthService {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'user-notfound') {
-      } else if (error.code == 'wrong-password') {}
+
+      } else if (error.code == 'wrong-password') {
+        
+      }
     }
   }
 
