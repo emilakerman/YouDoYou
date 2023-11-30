@@ -82,14 +82,14 @@ class Home extends ConsumerWidget {
                 isShared: false,
               ),
               TodoList(
-                title: "Completed Todos",
-                isDone: true,
-                isShared: false,
-              ),
-              TodoList(
                 title: "Shared Todos",
                 isDone: false,
                 isShared: true,
+              ),
+              TodoList(
+                title: "Completed Todos",
+                isDone: true,
+                isShared: false,
               ),
             ],
           ),
