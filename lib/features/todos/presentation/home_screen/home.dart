@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/common_widgets/bottom_navigation_buttons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
 import 'package:youdoyou/features/todos/presentation/home_screen/users_todo_list.dart';
+import 'package:youdoyou/utils/stream_provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends ConsumerWidget {
   final String title = 'Home';
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // TEMPORARY LOG OUT
+  Widget build(BuildContext context, WidgetRef ref) {
     Future<void> logOut() async {
       await FirebaseAuthService().signOut();
     }
+
+    final streamProvider = ref.watch(streamProviderExampleProvider);
+
+    // Schedule the snackbar to appear shortly after the build phase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Use the condition based on the listener notification
+      if (streamProvider.previousCollectionSize > 0) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Todo shared with you!'),
+            duration: Duration(seconds: 3),
+            action: SnackBarAction(
+              label: 'Dismiss',
+              onPressed: () {
+                // Optionally, you can add a dismiss action
+                // streamProvider.dismissSnackbar(); // Add a method if needed
+              },
+            ),
+          ),
+        );
+      }
+
+      // Set the widgetBuilt flag to true after the initial build
+      streamProvider.widgetBuilt = true;
+    });
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -65,8 +91,6 @@ class Home extends StatelessWidget {
                 isDone: false,
                 isShared: true,
               ),
-
-              //TODO(Any): Implement new collection in firestore with shared todos and add to this widget.
             ],
           ),
         ),
