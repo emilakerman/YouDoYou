@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
+import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
@@ -28,7 +30,8 @@ class DetailScreenState extends State<DetailScreen> {
     super.initState();
     _selectedDate = parseDateStringToDate();
     _titleController = TextEditingController(text: widget.entry?.title ?? "");
-    _descriptionController = TextEditingController(text: widget.entry?.description ?? "");
+    _descriptionController =
+        TextEditingController(text: widget.entry?.description ?? "");
   }
 
   @override
@@ -58,6 +61,16 @@ class DetailScreenState extends State<DetailScreen> {
     }
   }
 
+  String formatCustomDateString(String? dateString) {
+    if (dateString != null) {
+      DateTime? date = DateTime.tryParse(dateString);
+      if (date != null) {
+        return DateFormat('EEEE, d MMMM').format(date);
+      }
+    }
+    return ''; // Handle the case where parsing fails or the date string is null
+  }
+
   void _toggleEditMode() {
     setState(() {
       _isEditMode = !_isEditMode;
@@ -84,73 +97,124 @@ class DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.entry?.title ?? "Title",
-            style:
-                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+            style: const TextStyle(
+                color: AppColors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold)),
         iconTheme: const IconThemeData(color: AppColors.white),
         actions: [
-          IconButton(
-            onPressed: _toggleEditMode,
-            icon: const Icon(
-              AppIcons.editIcon,
-              color: AppColors.white,
-              size: 30,
-            ),
-          ),
+          widget.entry?.email == ""
+              ? IconButton(
+                  onPressed: _toggleEditMode,
+                  icon: const Icon(
+                    AppIcons.editIcon,
+                    color: AppColors.white,
+                    size: 30,
+                  ),
+                )
+              : SizedBox.shrink(),
         ],
         backgroundColor: AppColors.complement,
       ),
       backgroundColor: AppColors.primary,
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Image(
-                  image: NetworkImage(widget.entry?.image ?? ""),
-                  fit: BoxFit.cover,
-                )),
-            _isEditMode
-                ? TextField(controller: _titleController)
-                : Text(widget.entry?.title ?? "",
-                    style: const TextStyle(
-                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
-            _isEditMode
-                ? TextField(controller: _descriptionController)
-                : Text(widget.entry?.description ?? "",
-                    style: const TextStyle(
-                        color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
-            _isEditMode
-                ? TextFormField(
-                    readOnly: true,
-                    onTap: () => _selectDate(context),
-                    decoration: const InputDecoration(
-                      icon: Icon(AppIcons.calendarIcon),
-                      labelText: 'Select End Date',
-                    ),
-                    controller: TextEditingController(
-                      text: _selectedDate != null
-                          ? '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}'
-                          : widget.entry?.endDate,
-                    ),
-                  )
-                : Text(widget.entry?.endDate ?? ""),
-            Consumer(
-              builder: (context, ref, child) => Row(
-                children: [
-                  IconButton(onPressed: () => context.pop(), icon: const Icon(Icons.arrow_back)),
-                  IconButton(
-                      onPressed: () {
-                        _toggleEditMode();
-                      },
-                      icon: const Icon(Icons.edit)),
-                  _isEditMode
-                      ? TextButton(onPressed: () => {update(ref)}, child: const Text("save"))
-                      : const SizedBox.shrink(),
-                  widget.entry?.email != ""
-                      ? Text("Author: ${widget.entry?.author}")
-                      : const SizedBox.shrink()
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset: Offset(0, 2), // Offset in the x, y direction
+                  ),
                 ],
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
+              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Image(
+                    image: NetworkImage(widget.entry?.image ?? ""),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+            //here
+            gapH12,
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Card(
+                color: AppColors.secondary,
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      _isEditMode
+                          ? TextField(controller: _titleController)
+                          : Text("${widget.entry?.title}" ?? "",
+                              style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold)),
+                      _isEditMode
+                          ? TextField(controller: _descriptionController)
+                          : Text("${widget.entry?.description}" ?? "",
+                              style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                      _isEditMode
+                          ? TextFormField(
+                              readOnly: true,
+                              onTap: () => _selectDate(context),
+                              decoration: const InputDecoration(
+                                icon: Icon(AppIcons.calendarIcon),
+                                labelText: 'Select End Date',
+                              ),
+                              controller: TextEditingController(
+                                text: _selectedDate != null
+                                    ? '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}'
+                                    : widget.entry?.endDate,
+                              ),
+                            )
+                          : Text(
+                              "Do before: ${formatCustomDateString(widget.entry?.endDate)}" ??
+                                  "",
+                              style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold)),
+                      widget.entry?.email != ""
+                          ? Text("Author: ${widget.entry?.author}",
+                              style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold))
+                          : const SizedBox.shrink(),
+
+                      //here
+                      Consumer(
+                        builder: (context, ref, child) => Row(
+                          children: [
+                            _isEditMode
+                                ? ElevatedButton(
+                                    style: const ButtonStyle(),
+                                    onPressed: () => {update(ref)},
+                                    child: const Text('Save'),
+                                  )
+                                : const SizedBox.shrink()
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
