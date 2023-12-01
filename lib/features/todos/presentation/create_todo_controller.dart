@@ -45,8 +45,7 @@ class CreateToDoItemController extends _$CreateToDoItemController {
   }
 
   void changeImage(String imageUrl) {
-    // state.image = imageUrl;
-    state.image = 'https://i.imgur.com/DHLl4HG.jpeg';
+    state.image = imageUrl;
   }
 
   void changeEmail(String email) {
