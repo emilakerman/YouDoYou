@@ -21,11 +21,10 @@ final userProvider = StateNotifierProvider<UserNotifier, User>(
 );
 
 class _HomeHeaderState extends ConsumerState<HomeHeader> {
-  // String newName = "";
-  // String profilePic = "";
   @override
   void initState() {
     fetchData();
+    // clearUserCard();
     super.initState();
   }
 
@@ -56,85 +55,96 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: Sizes.p16, right: Sizes.p12),
-          height: 90,
-          width: 130,
-          child: ref.watch(profilePicProvider) != ''
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(Sizes.p12),
-                  child: Image.file(
-                    File(ref.watch(profilePicProvider)),
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : const Icon(
-                  AppIcons.profileIcon,
-                  color: AppColors.grey,
-                ),
-        ),
-        Card(
-          color: AppColors.extra,
-          margin: const EdgeInsets.only(top: Sizes.p16, left: Sizes.p4, right: Sizes.p4),
-          child: SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(left: Sizes.p12, right: Sizes.p12, top: Sizes.p8),
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3,
             height: 90,
-            width: 220,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(Sizes.p8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Profile',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
-                        ),
-                        Text(
-                          ref.watch(userNameProvider),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
+            child: ref.watch(profilePicProvider) != ''
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(Sizes.p12),
+                    child: Image.file(
+                      File(ref.watch(profilePicProvider)),
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(Sizes.p12)),
+                      color: AppColors.extra,
+                    ),
+                    height: 90,
+                    width: 125,
+                    child: const Icon(
+                      AppIcons.profileIcon,
+                      color: AppColors.white,
                     ),
                   ),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.only(top: Sizes.p48),
-                  onPressed: () {
-                    _startEditUserCard(context);
-                  },
-                  icon: const Icon(
-                    AppIcons.editIcon,
-                    color: AppColors.black,
+          ),
+          const SizedBox(width: 5),
+          Card(
+            color: AppColors.extra,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.60,
+              height: 90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(Sizes.p8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Profile',
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                          Text(
+                            ref.watch(userNameProvider),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                IconButton(
+                  IconButton(
                     padding: const EdgeInsets.only(top: Sizes.p48),
-                    onPressed: () => clearUserCard(),
+                    onPressed: () {
+                      _startEditUserCard(context);
+                    },
                     icon: const Icon(
-                      Icons.clear,
+                      AppIcons.editIcon,
                       color: AppColors.black,
-                    ))
-              ],
+                    ),
+                  ),
+                  IconButton(
+                      padding: const EdgeInsets.only(top: Sizes.p48),
+                      onPressed: () => clearUserCard(),
+                      icon: const Icon(
+                        Icons.clear,
+                        color: AppColors.black,
+                      ))
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

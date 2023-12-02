@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
+import 'package:youdoyou/features/todos/presentation/create_todo/create_to_do_item.dart';
 
 part 'create_todo_controller.g.dart';
 
@@ -24,33 +25,29 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     return newTodoModel;
   }
 
-  void changeTitle(String newTitle) {
-    state.title = newTitle;
+  void changeState(String newData, Enum field) {
+    switch (field) {
+      case Fields.title:
+        state.title = newData;
+      case Fields.description:
+        state.description = newData;
+      case Fields.endDate:
+        state.endDate = newData;
+      case Fields.author:
+        state.author = newData;
+      case Fields.image:
+        state.image = newData;
+      case Fields.email:
+        state.email = newData;
+    }
   }
 
-  void changeDescription(String newDescription) {
-    state.description = newDescription;
-  }
-
-  void changeEndDate(String newEndDate) {
-    state.endDate = newEndDate;
-  }
-
-  void changeAuthor(String newAuthor) {
-    state.author = newAuthor;
+  void changeImage(String imageUrl) {
+    state.image = imageUrl;
   }
 
   void toggleIsDone() async {
     state.isDone = !state.isDone;
-  }
-
-  void changeImage(String imageUrl) {
-    // state.image = imageUrl;
-    state.image = 'https://i.imgur.com/DHLl4HG.jpeg';
-  }
-
-  void changeEmail(String email) {
-    state.email = email;
   }
 }
 
