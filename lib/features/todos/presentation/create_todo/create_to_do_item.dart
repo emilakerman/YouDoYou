@@ -66,17 +66,14 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
   }
 
   void _setTodoObject({required WidgetRef ref}) {
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeTitle(_titleController.text.characters.toString());
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeDescription(_descriptionController.text.characters.toString());
-    ref.read(createToDoItemControllerProvider.notifier).changeEndDate(_selectedDate.toString());
-    ref.read(createToDoItemControllerProvider.notifier).changeAuthor(ref.watch(authEmailProvider));
-    ref
-        .read(createToDoItemControllerProvider.notifier)
-        .changeEmail(_sharedEmailController.text.characters.toString().toLowerCase());
+    CreateToDoItemController writeData = ref.read(createToDoItemControllerProvider.notifier);
+
+    writeData.changeState(_titleController.text.characters.toString(), Fields.title);
+    writeData.changeState(_descriptionController.text.characters.toString(), Fields.description);
+    writeData.changeState(_selectedDate.toString(), Fields.endDate);
+    writeData.changeState(ref.watch(authEmailProvider), Fields.author);
+    writeData.changeState(
+        _sharedEmailController.text.characters.toString().toLowerCase(), Fields.email);
     ref.watch(createToDoItemControllerProvider);
   }
 
@@ -181,4 +178,14 @@ class _CreateItemWidgetState extends State<CreateItemWidget> {
       ],
     );
   }
+}
+
+enum Fields {
+  id,
+  title,
+  description,
+  endDate,
+  author,
+  image,
+  email,
 }

@@ -13,9 +13,9 @@ class ToDoEntry extends StatefulWidget {
 
   const ToDoEntry({
     required this.entry,
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ToDoEntry> createState() => _ToDoItemState();
