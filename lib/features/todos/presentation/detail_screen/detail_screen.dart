@@ -112,7 +112,7 @@ class DetailScreenState extends State<DetailScreen> {
                     size: 30,
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
         backgroundColor: AppColors.complement,
       ),
@@ -129,7 +129,7 @@ class DetailScreenState extends State<DetailScreen> {
                     color: Colors.black.withOpacity(0.3), // Shadow color
                     spreadRadius: 2, // Spread radius
                     blurRadius: 5, // Blur radius
-                    offset: Offset(0, 2), // Offset in the x, y direction
+                    offset: const Offset(0, 2), // Offset in the x, y direction
                   ),
                 ],
                 border: Border.all(

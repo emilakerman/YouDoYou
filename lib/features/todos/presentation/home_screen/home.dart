@@ -26,8 +26,8 @@ class Home extends ConsumerWidget {
       if (streamProvider.previousCollectionSize > 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Todo shared with you!'),
-            duration: Duration(seconds: 3),
+            content: const Text('Todo shared with you!'),
+            duration: const Duration(seconds: 3),
             action: SnackBarAction(
               label: 'Dismiss',
               onPressed: () {

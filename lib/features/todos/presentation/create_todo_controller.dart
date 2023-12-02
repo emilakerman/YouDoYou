@@ -42,6 +42,10 @@ class CreateToDoItemController extends _$CreateToDoItemController {
     }
   }
 
+  void changeImage(String imageUrl) {
+    state.image = imageUrl;
+  }
+
   void toggleIsDone() async {
     state.isDone = !state.isDone;
   }
