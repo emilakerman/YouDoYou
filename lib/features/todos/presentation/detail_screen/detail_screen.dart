@@ -30,8 +30,7 @@ class DetailScreenState extends State<DetailScreen> {
     super.initState();
     _selectedDate = parseDateStringToDate();
     _titleController = TextEditingController(text: widget.entry?.title ?? "");
-    _descriptionController =
-        TextEditingController(text: widget.entry?.description ?? "");
+    _descriptionController = TextEditingController(text: widget.entry?.description ?? "");
   }
 
   @override
@@ -97,10 +96,8 @@ class DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.entry?.title ?? "Title",
-            style: const TextStyle(
-                color: AppColors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold)),
+            style:
+                const TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.bold)),
         iconTheme: const IconThemeData(color: AppColors.white),
         actions: [
           widget.entry?.email == ""
@@ -157,14 +154,14 @@ class DetailScreenState extends State<DetailScreen> {
                     children: [
                       _isEditMode
                           ? TextField(controller: _titleController)
-                          : Text("${widget.entry?.title}" ?? "",
+                          : Text("${widget.entry?.title}",
                               style: const TextStyle(
                                   color: AppColors.white,
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold)),
                       _isEditMode
                           ? TextField(controller: _descriptionController)
-                          : Text("${widget.entry?.description}" ?? "",
+                          : Text("${widget.entry?.description}",
                               style: const TextStyle(
                                   color: AppColors.white,
                                   fontSize: 15,
@@ -183,9 +180,7 @@ class DetailScreenState extends State<DetailScreen> {
                                     : widget.entry?.endDate,
                               ),
                             )
-                          : Text(
-                              "Do before: ${formatCustomDateString(widget.entry?.endDate)}" ??
-                                  "",
+                          : Text("Do before: ${formatCustomDateString(widget.entry?.endDate)}",
                               style: const TextStyle(
                                   color: AppColors.white,
                                   fontSize: 10,

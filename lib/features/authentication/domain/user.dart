@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
@@ -42,7 +43,9 @@ class User {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //String imagePath = prefs.getString('imagePath') ?? '';
     String imagePath = prefs.getString('imagePath$userId') ?? '';
-    print('is path empty? $imagePath');
+    if (kDebugMode) {
+      print('is path empty? $imagePath');
+    }
     if (imagePath.isNotEmpty) {
       setPicture = imagePath;
     }
