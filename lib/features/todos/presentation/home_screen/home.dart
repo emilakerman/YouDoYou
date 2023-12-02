@@ -30,10 +30,7 @@ class Home extends ConsumerWidget {
             duration: const Duration(seconds: 3),
             action: SnackBarAction(
               label: 'Dismiss',
-              onPressed: () {
-                // Optionally, you can add a dismiss action
-                // streamProvider.dismissSnackbar(); // Add a method if needed
-              },
+              onPressed: () {},
             ),
           ),
         );
