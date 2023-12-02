@@ -30,7 +30,6 @@ class User {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userName$userId', inputName);
     setName = prefs.setString('userName$userId', inputName) as String;
-    //print('saveName() as : ${prefs.getString('userName$userId')}');
   }
 
   //---------PICTURE-----------------------------------------------------------
@@ -41,7 +40,6 @@ class User {
 
   void getPicture() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //String imagePath = prefs.getString('imagePath') ?? '';
     String imagePath = prefs.getString('imagePath$userId') ?? '';
     if (kDebugMode) {
       print('is path empty? $imagePath');

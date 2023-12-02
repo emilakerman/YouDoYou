@@ -35,16 +35,6 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
     localStorage.saveImage(image: selectedPicture!);
     ref.read(userNameProvider.notifier).state = nameController.text;
     ref.read(profilePicProvider.notifier).state = selectedPicture!;
-
-    // var user = ref.watch(userProvider.notifier);
-
-    // if (nameController.text.isNotEmpty && selectedPicture != null) {
-    //   user.updateAll(nameController.text, selectedPicture!);
-    // } else if (selectedPicture == null) {
-    //   user.updateName(nameController.text);
-    // } else if (nameController.text.isEmpty) {
-    //   user.updateImg(selectedPicture!);
-    // }
     Navigator.of(context).pop();
   }
 
