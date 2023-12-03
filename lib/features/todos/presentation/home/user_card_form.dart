@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
+import 'package:youdoyou/features/todos/presentation/home/home_header.dart';
 import 'package:youdoyou/utils/locally_stored_data.dart';
 
 class UserCardForm extends ConsumerStatefulWidget {
@@ -25,7 +25,7 @@ class _UserCardFormState extends ConsumerState<UserCardForm> {
     if (image != null) {
       selectedPicture = image.path;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('imagePath${FirebaseAuthService().getUser()}', image.path);
+      await prefs.setString('imagePath${FirebaseAuthRepository().getUser()}', image.path);
     }
   }
 

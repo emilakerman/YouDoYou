@@ -3,7 +3,10 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 
-enum AuthMode { signup, login }
+enum AuthMode {
+  signup,
+  login,
+}
 
 class AuthCard extends StatefulWidget {
   const AuthCard({super.key});
@@ -46,13 +49,13 @@ class AuthCardState extends State<AuthCard> {
     if (authMode == AuthMode.login) {
       // Log user in AND GO TO HOME
       const Duration(seconds: 1);
-      await FirebaseAuthService()
+      await FirebaseAuthRepository()
           .logIn(_authData['email'] as String, _authData['password'] as String);
     } else {
       //this returns a future/promise... the whole function should be async?
       // check if user already exists or no, Sign user up and go home
       const Duration(seconds: 1);
-      await FirebaseAuthService()
+      await FirebaseAuthRepository()
           .signUp(_authData['email'] as String, _authData['password'] as String);
     }
     setState(() {
@@ -114,7 +117,6 @@ class AuthCardState extends State<AuthCard> {
                   },
                   onSaved: (value) {
                     _authData['email'] = value!;
-                    //emailController.text = '';
                   },
                 ),
                 const SizedBox(

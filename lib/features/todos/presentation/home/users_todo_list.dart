@@ -5,7 +5,7 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_sizes.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/todo_entry.dart';
+import 'package:youdoyou/features/todos/presentation/home/todo_entry.dart';
 
 class TodoList extends ConsumerStatefulWidget {
   final String title;

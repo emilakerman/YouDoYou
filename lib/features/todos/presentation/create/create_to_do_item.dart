@@ -8,7 +8,7 @@ import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 import 'package:youdoyou/features/todos/data/firestore_data_repository.dart';
 import 'package:youdoyou/features/todos/data/image_picker.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
+import 'package:youdoyou/features/todos/presentation/create/create_todo_controller.dart';
 
 class CreateItemWidget extends StatefulWidget {
   const CreateItemWidget({super.key});

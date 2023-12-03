@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/features/todos/data/firebase_storage_repository.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo_controller.dart';
+import 'package:youdoyou/features/todos/presentation/create/create_todo_controller.dart';
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
