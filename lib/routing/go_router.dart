@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youdoyou/common_widgets/error_widget.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/detail_screen/detail_screen.dart';
+import 'package:youdoyou/features/todos/presentation/details/detail_screen.dart';
 import 'package:youdoyou/features/authentication/presentation/auth_page.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/home.dart';
+import 'package:youdoyou/features/todos/presentation/home/home_screen.dart';
 import 'package:youdoyou/routing/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +21,7 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'home',
               name: AppRoutes.home.name,
-              builder: (BuildContext context, GoRouterState state) => const Home(),
+              builder: (BuildContext context, GoRouterState state) => const HomeScreen(),
             ),
             GoRoute(
               path: 'detail',

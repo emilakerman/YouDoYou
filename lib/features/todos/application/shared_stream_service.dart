@@ -3,20 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 
-final streamProviderExampleProvider = ChangeNotifierProvider<StreamProviderExample>((ref) {
-  return StreamProviderExample();
-});
-
-class StreamProviderExample extends ChangeNotifier {
+class SharedStreamService extends ChangeNotifier {
   int previousCollectionSize = 0;
   bool widgetBuilt = false;
 
-  StreamProviderExample() {
-    FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  SharedStreamService() {
+    FirebaseAuthRepository firebaseAuthRepository = FirebaseAuthRepository();
 
     FirebaseFirestore.instance
         .collection('Shared')
-        .where('email', isEqualTo: firebaseAuthService.getUserEmail())
+        .where('email', isEqualTo: firebaseAuthRepository.getUserEmail())
         .snapshots()
         .listen((QuerySnapshot snapshot) {
       final currentCollectionSize = snapshot.size;
@@ -29,3 +25,7 @@ class StreamProviderExample extends ChangeNotifier {
     });
   }
 }
+
+final sharedStreamServiceProvider = ChangeNotifierProvider<SharedStreamService>((ref) {
+  return SharedStreamService();
+});

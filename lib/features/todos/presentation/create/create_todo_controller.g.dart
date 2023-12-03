@@ -6,8 +6,7 @@ part of 'create_todo_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$createToDoItemControllerHash() =>
-    r'edf3d27b06b9de0855d7dd77508256381720e512';
+String _$createToDoItemControllerHash() => r'edf3d27b06b9de0855d7dd77508256381720e512';
 
 /// See also [CreateToDoItemController].
 @ProviderFor(CreateToDoItemController)
@@ -15,9 +14,8 @@ final createToDoItemControllerProvider =
     AutoDisposeNotifierProvider<CreateToDoItemController, TodoModel>.internal(
   CreateToDoItemController.new,
   name: r'createToDoItemControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$createToDoItemControllerHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$createToDoItemControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

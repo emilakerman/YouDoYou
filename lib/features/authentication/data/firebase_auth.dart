@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'firebase_auth.g.dart';
 
-class FirebaseAuthService {
+class FirebaseAuthRepository {
   final _auth = FirebaseAuth.instance;
 
   User? getUser() => _auth.currentUser;
@@ -32,10 +32,10 @@ class FirebaseAuthService {
 // Provider that contains the current user UID.
 @riverpod
 String authState(AuthStateRef ref) {
-  return FirebaseAuthService().getUser()!.uid.toString();
+  return FirebaseAuthRepository().getUser()!.uid.toString();
 }
 
 @riverpod
 String authEmail(AuthStateRef ref) {
-  return FirebaseAuthService().getUser()!.email.toString();
+  return FirebaseAuthRepository().getUser()!.email.toString();
 }

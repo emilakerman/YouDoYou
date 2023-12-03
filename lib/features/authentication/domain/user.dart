@@ -6,7 +6,7 @@ import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
 class User {
   String? name;
   String? profilePicture;
-  final userId = FirebaseAuthService().getUser() ?? '';
+  final userId = FirebaseAuthRepository().getUser() ?? '';
 
   User({required this.name, required this.profilePicture});
 

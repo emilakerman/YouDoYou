@@ -4,21 +4,21 @@ import 'package:youdoyou/common_widgets/bottom_navigation_buttons.dart';
 import 'package:youdoyou/constants/app_colors.dart';
 import 'package:youdoyou/constants/app_icons.dart';
 import 'package:youdoyou/features/authentication/data/firebase_auth.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/home_header.dart';
-import 'package:youdoyou/features/todos/presentation/home_screen/users_todo_list.dart';
-import 'package:youdoyou/utils/stream_provider.dart';
+import 'package:youdoyou/features/todos/application/shared_stream_service.dart';
+import 'package:youdoyou/features/todos/presentation/home/home_header.dart';
+import 'package:youdoyou/features/todos/presentation/home/users_todo_list.dart';
 
-class Home extends ConsumerWidget {
-  final String title = 'Home';
-  const Home({super.key});
+class HomeScreen extends ConsumerWidget {
+  final String title = 'HomeScreen';
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> logOut() async {
-      await FirebaseAuthService().signOut();
+      await FirebaseAuthRepository().signOut();
     }
 
-    final streamProvider = ref.watch(streamProviderExampleProvider);
+    final streamProvider = ref.watch(sharedStreamServiceProvider);
 
     // Schedule the snackbar to appear shortly after the build phase
     WidgetsBinding.instance.addPostFrameCallback((_) {

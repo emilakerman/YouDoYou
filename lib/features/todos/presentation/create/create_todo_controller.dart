@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:youdoyou/features/todos/domain/todo_model.dart';
-import 'package:youdoyou/features/todos/presentation/create_todo/create_to_do_item.dart';
+import 'package:youdoyou/features/todos/presentation/create/create_to_do_item.dart';
 
 part 'create_todo_controller.g.dart';
 
