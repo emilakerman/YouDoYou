@@ -9,7 +9,7 @@ import 'package:youdoyou/features/todos/presentation/home/home_header.dart';
 import 'package:youdoyou/features/todos/presentation/home/users_todo_list.dart';
 
 class HomeScreen extends ConsumerWidget {
-  final String title = 'HomeScreen';
+  final String title = '';
   const HomeScreen({super.key});
 
   @override

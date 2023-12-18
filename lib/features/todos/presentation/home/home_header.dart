@@ -24,7 +24,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
   @override
   void initState() {
     fetchData();
-    // clearUserCard();
+    clearUserCard();
     super.initState();
   }
 
